@@ -1,3 +1,10 @@
 /spec/
 /META-INF/
 /handler/
+/g.class
+/resources/
+/LambdaFunctionHandler.class
+/Request.class
+/OutputCapturer$ExcessiveOutputException.class
+/OutputCapturer$LimitedPrintStream.class
+/OutputCapturer.class

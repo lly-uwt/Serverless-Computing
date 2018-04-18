@@ -1,4 +1,4 @@
-package handler;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -88,14 +88,14 @@ public class LambdaFunctionHandler implements RequestHandler<Request, String> {
 		}
 		fileW.close();
 
-		String bucketName = "helloworld-us-standard";
-		PutObjectRequest por = new PutObjectRequest(bucketName, id, file);
-		por.setCannedAcl(CannedAccessControlList.PublicRead);
-		AmazonS3 s3client = new AmazonS3Client();
-		s3client.putObject(por);
-		file.deleteOnExit();
+//		String bucketName = "helloworld-us-standard";
+//		PutObjectRequest por = new PutObjectRequest(bucketName, id, file);
+//		por.setCannedAcl(CannedAccessControlList.PublicRead);
+//		AmazonS3 s3client = new AmazonS3Client();
+//		s3client.putObject(por);
+//		file.deleteOnExit();
 
-		return id;
+		return output;
 
 	}
 
