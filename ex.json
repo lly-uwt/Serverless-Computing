@@ -1,8 +1,7 @@
 {
-    "name": "scimark.fft.large",
-    "id": "name of output",
+    "name": "scimark.fft.small",
     "bt": "2",
     "wt": "3",
     "i": "1",
-    "it": "30" 
+    "it": "2" 
 }
