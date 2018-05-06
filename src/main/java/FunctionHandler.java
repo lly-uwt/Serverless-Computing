@@ -45,11 +45,6 @@ public class FunctionHandler implements RequestHandler<Request, Response> {
 
         long vuptime = VmCpuStat.getUpTime(v2);
 
-//        String fileout = ((request.getName() != null)
-//                && (request.getName().length() > 0))
-//                        ? runCommand(request.getName(), context)
-//                        : "";
-
         return new Response(LocalDateTime.now().toString(), uuid, cused.utime, cused.stime, cused.cutime,
                 cused.cstime, vused.cpuusr, vused.cpunice, vused.cpukrn,
                 vused.cpuidle, vused.cpuiowait, vused.cpuirq, vused.cpusirq,
@@ -78,42 +73,6 @@ public class FunctionHandler implements RequestHandler<Request, Response> {
             } catch (IOException ioe) {
                 throw new Error("Error reading existing UUID");
             }
-        }
-    }
-
-    public String runCommand(String sCommand, Context context) {
-        StringBuffer sbOutput = new StringBuffer();
-        try {
-            sbOutput.append("COMMAND:");
-            sbOutput.append(sCommand);
-            Process p = Runtime.getRuntime().exec(sCommand);
-            BufferedReader br = new BufferedReader(
-                    new InputStreamReader(p.getInputStream()));
-            sbOutput.append("  OUTPUT:");
-            while (br.ready())
-                sbOutput.append(br.readLine());
-            sbOutput.append("  ERROR:");
-            br.close();
-            br = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-            while (br.ready())
-                sbOutput.append(br.readLine());
-            br.close();
-            p.getOutputStream().close();
-            p.getErrorStream().close();
-            p.getInputStream().close();
-            // p.destroy();
-            // p.destroyForcibly();
-            // p.destroyForcibly();
-            // p.destroyForcibly();
-            p.waitFor();
-            sbOutput.append("  IS-ALIVE:" + p.isAlive());
-            sbOutput.append("  EXIT-VAL:" + p.exitValue());
-            sbOutput.append("  TIME-LEFT:" + context.getRemainingTimeInMillis());
-            return sbOutput.toString();
-        } catch (IOException ioe) {
-            return "command " + sCommand + " failed.";
-        } catch (InterruptedException ie) {
-            return "process interrupted running " + sCommand + " ...";
         }
     }
 }

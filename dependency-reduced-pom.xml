@@ -34,14 +34,14 @@
     <dependency>
       <groupId>lib</groupId>
       <artifactId>janino</artifactId>
-      <version>0</version>
+      <version>0.0</version>
       <scope>system</scope>
       <systemPath>${basedir}\lib\janino.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>lib</groupId>
       <artifactId>javac</artifactId>
-      <version>0</version>
+      <version>0.0</version>
       <scope>system</scope>
       <systemPath>${basedir}\lib\javac.jar</systemPath>
     </dependency>
@@ -76,14 +76,14 @@
     <dependency>
       <groupId>lib</groupId>
       <artifactId>sunflow</artifactId>
-      <version>0</version>
+      <version>0.0</version>
       <scope>system</scope>
       <systemPath>${basedir}\lib\sunflow.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>lib</groupId>
       <artifactId>Tidy</artifactId>
-      <version>0</version>
+      <version>0.0</version>
       <scope>system</scope>
       <systemPath>${basedir}\lib\Tidy.jar</systemPath>
     </dependency>
@@ -100,7 +100,7 @@
       <dependency>
         <groupId>com.amazonaws</groupId>
         <artifactId>aws-java-sdk-bom</artifactId>
-        <version>1.11.313</version>
+        <version>1.11.323</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

@@ -1,4 +1,6 @@
+OutputCapturer$ExcessiveOutputException.class
 spec\harness\results\LoopResult.class
+Request.class
 spec\benchmarks\compiler\sunflow\Main.class
 spec\reporter\PlainWriter.class
 spec\benchmarks\check\LoopBounds.class
@@ -13,7 +15,6 @@ spec\harness\Constants.class
 spec\benchmarks\helloworld\Main.class
 spec\benchmarks\scimark\monte_carlo\Main.class
 spec\benchmarks\compiler\SpecFileManager$CachedFileObject.class
-com\amazonaws\lambda\serverless\LambdaFunctionHandler.class
 spec\benchmarks\compiler\MainBase.class
 spec\benchmarks\compress\Compressor$HashTable.class
 spec\reporter\HTMLWriter.class
@@ -29,6 +30,7 @@ spec\harness\ProgramRunner.class
 spec\harness\analyzer\CallbackAnalyzerExample$NumberResult.class
 spec\benchmarks\serial\data\TestWithFinalField.class
 spec\benchmarks\compress\Decompressor$SuffixTable.class
+CpuTime.class
 spec\benchmarks\serial\data\TestHandler.class
 spec\benchmarks\compress\Compressor.class
 spec\benchmarks\crypto\rsa\Main.class
@@ -44,6 +46,7 @@ spec\harness\analyzer\HeapMemoryTotalAnalyzer$HeapMemoryTotal.class
 spec\harness\SpecJVMBenchmark.class
 spec\benchmarks\crypto\signverify\Main.class
 spec\benchmarks\startup\StartupBenchmarkOutput.class
+OutputCapturer$LimitedPrintStream.class
 spec\benchmarks\scimark\fft\Main.class
 spec\benchmarks\check\syncTest.class
 spec\benchmarks\scimark\monte_carlo\MonteCarlo.class
@@ -57,6 +60,7 @@ spec\validity\DigestDefinition.class
 spec\benchmarks\check\subClass.class
 spec\benchmarks\compress\Harness.class
 spec\harness\analyzer\TempAnalyzer.class
+Response.class
 spec\harness\results\BenchmarkResult.class
 spec\benchmarks\scimark\sparse\Main.class
 spec\benchmarks\xml\transform\ExtOutputStream.class
@@ -109,8 +113,10 @@ spec\benchmarks\derby\InitThread.class
 spec\benchmarks\check\Sub.class
 spec\benchmarks\xml\transform\BaseOutputStream.class
 spec\benchmarks\serial\data\TestClassReferenceTest.class
+FunctionHandler.class
 spec\benchmarks\serial\data\TestExternalizable.class
 spec\benchmarks\serial\data\TestPayload.class
+OutputCapturer.class
 spec\benchmarks\check\C3intf.class
 spec\benchmarks\xml\XMLBenchmark.class
 spec\harness\analyzer\TempAnalyzer$TemperatureResult.class
@@ -122,6 +128,7 @@ spec\reporter\SPECSubmissionProcessor.class
 spec\benchmarks\serial\data\Handler.class
 spec\reporter\Utils.class
 spec\benchmarks\serial\Main$1.class
+SpecResult.class
 spec\benchmarks\derby\DataReader.class
 spec\benchmarks\xml\ReportingHandler.class
 spec\harness\analyzer\AnalyzersRunner.class
@@ -136,6 +143,7 @@ spec\benchmarks\serial\data\TestArray.class
 spec\harness\SpecJVMBenchmarkBase.class
 spec\benchmarks\serial\data\ProxiedClass.class
 spec\benchmarks\serial\data\TestByteArray.class
+VmCpuStat.class
 spec\benchmarks\compress\Main.class
 spec\benchmarks\scimark\utils\kernel.class
 spec\harness\analyzer\CallbackAnalyzerExample$NumberInfo.class
@@ -164,6 +172,7 @@ spec\benchmarks\serial\data\TestBigInteger.class
 spec\benchmarks\derby\DerbyHarness.class
 spec\benchmarks\compiler\SpecFileManager$OutputFileObject.class
 spec\harness\analyzer\PowerAnalyzer.class
+SpecJVM.class
 spec\benchmarks\check\StringAndInt.class
 spec\benchmarks\serial\data\TestSimple.class
 spec\harness\KnownIssues.class
