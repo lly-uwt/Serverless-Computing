@@ -1,0 +1,1 @@
+{"value":"2018-05-06T22:43:06.744","uuid":"d9830fb0-0193-4aff-b662-a64f216ae108","cpuUsr":516,"cpuKrn":0,"pid":0,"newcontainer":0,"vmcpuusr":516,"vmcpunice":0,"vmcpukrn":0,"vmcpuidle":3328,"vmcpuiowait":1,"vmcpuirq":0,"vmcpusirq":0,"vmcpusteal":0,"vmuptime":1525644444,"bmname":"scimark.fft.small","bmscore":"18.22","bmthreads":"2","bmtotalduration":19241,"cuTime":0,"csTime":0}

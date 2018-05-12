@@ -57,67 +57,11 @@
 			<version>1.1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>lib</groupId>
-			<artifactId>janino</artifactId>
+			<groupId>specjvm</groupId>
+			<artifactId>specjvm</artifactId>
 			<scope>system</scope>
 			<version>0.0</version>
-			<systemPath>${basedir}/lib/janino.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>lib</groupId>
-			<artifactId>javac</artifactId>
-			<scope>system</scope>
-			<version>0.0</version>
-			<systemPath>${basedir}/lib/javac.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>lib</groupId>
-			<artifactId>jcommon</artifactId>
-			<scope>system</scope>
-			<version>1.0.9</version>
-			<systemPath>${basedir}/lib/jcommon-1.0.9.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>lib</groupId>
-			<artifactId>jfreechart</artifactId>
-			<scope>system</scope>
-			<version>1.0.5</version>
-			<systemPath>${basedir}/lib/jfreechart-1.0.5.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>lib</groupId>
-			<artifactId>jl</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>${basedir}/lib/jl1.0.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>lib</groupId>
-			<artifactId>json-simple</artifactId>
-			<scope>system</scope>
-			<version>1.1.1</version>
-			<systemPath>${basedir}/lib/json-simple-1.1.1.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>lib</groupId>
-			<artifactId>sunflow</artifactId>
-			<scope>system</scope>
-			<version>0.0</version>
-			<systemPath>${basedir}/lib/sunflow.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>lib</groupId>
-			<artifactId>Tidy</artifactId>
-			<scope>system</scope>
-			<version>0.0</version>
-			<systemPath>${basedir}/lib/Tidy.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>lib</groupId>
-			<artifactId>xom</artifactId>
-			<scope>system</scope>
-			<version>1.1</version>
-			<systemPath>${basedir}/lib/xom-1.1.jar</systemPath>
+			<systemPath>${basedir}/specjvm.jar</systemPath>
 		</dependency>
 	</dependencies>
 </project>
