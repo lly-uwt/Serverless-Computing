@@ -75,9 +75,17 @@ public class Main {
             @Override
             public LambdaLogger getLogger() {
                 return new LambdaLogger() {
+
                     @Override
-                    public void log(String string) {
-                        System.out.println("LOG:" + string);
+                    public void log(byte[] arg0) {
+                        // TODO Auto-generated method stub
+                        
+                    }
+
+                    @Override
+                    public void log(String arg0) {
+                        // TODO Auto-generated method stub
+                        
                     }
                 };
             }
