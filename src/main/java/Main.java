@@ -5,19 +5,26 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 public class Main {
     public static void main(String[] args) {
-//        Context c = getContext();
-//        Request req = new Request();
-//
-//        req.setName(args[0]);
-//        req.setBt(args[1]);
-//        req.setWt(args[2]);
-//        req.setI(args[3]);
-//        req.setIt(args[4]);
+//        test();
+        run(args);
+    }
+
+    private static void run(String[] args) {
+        Context c = getContext();
+        Request req = new Request();
+
+        req.setName(args[0]);
+        req.setBt(args[1]);
+        req.setWt(args[2]);
+        req.setI(args[3]);
+        req.setIt(args[4]);
         
-//        FunctionHandler funcHandler = new FunctionHandler();
-//        Response response = funcHandler.handleRequest(req, c);
-//        
-//        System.out.println(response.toString());
+        FunctionHandler funcHandler = new FunctionHandler();
+        Response response = funcHandler.handleRequest(req, c);
+        System.out.println(response.toString());
+    }
+
+    private static void test() {
         String[] params = new String[13];
         params[0] = "scimark.fft.small";
         params[1] = "-ict";
