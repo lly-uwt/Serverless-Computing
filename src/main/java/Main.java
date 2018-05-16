@@ -5,19 +5,34 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 public class Main {
     public static void main(String[] args) {
-        Context c = getContext();
-        Request req = new Request();
-
-        req.setName(args[0]);
-        req.setBt(args[1]);
-        req.setWt(args[2]);
-        req.setI(args[3]);
-        req.setIt(args[4]);
+//        Context c = getContext();
+//        Request req = new Request();
+//
+//        req.setName(args[0]);
+//        req.setBt(args[1]);
+//        req.setWt(args[2]);
+//        req.setI(args[3]);
+//        req.setIt(args[4]);
         
-        FunctionHandler funcHandler = new FunctionHandler();
-        Response response = funcHandler.handleRequest(req, c);
-        
-        System.out.println(response.toString());
+//        FunctionHandler funcHandler = new FunctionHandler();
+//        Response response = funcHandler.handleRequest(req, c);
+//        
+//        System.out.println(response.toString());
+        String[] params = new String[13];
+        params[0] = "scimark.fft.small";
+        params[1] = "-ict";
+        params[2] = "-ikv";
+        params[3] = "-crf";
+        params[4] = "false";
+        params[5] = "-bt";
+        params[6] = "2";
+        params[7] = "-wt";
+        params[8] = "3";
+        params[9] = "-i";
+        params[10] = "1";
+        params[11] = "-it";
+        params[12] = "5";
+        spec.harness.Launch.main(params);
     }
 
     private static Context getContext() {

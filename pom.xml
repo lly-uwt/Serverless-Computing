@@ -25,6 +25,9 @@
 					<target>1.8</target>
 					<encoding>UTF-8</encoding>
 					<forceJavacCompilerUse>true</forceJavacCompilerUse>
+					<excludes>
+      					<exclude>resource/*</exclude>
+    				</excludes>
 				</configuration>
 			</plugin>
 			<plugin>
