@@ -15,11 +15,26 @@
     </resources>
     <plugins>
       <plugin>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <filesets>
+            <fileset>
+              <directory>${basedir}/docker</directory>
+              <includes>
+                <include>serverless-lambda-1.0.0.jar</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-resources-plugin</artifactId>
         <version>3.1.0</version>
         <executions>
           <execution>
-            <id>copy-resources</id>
+            <id>copy-resources-to-target</id>
             <phase>validate</phase>
             <goals>
               <goal>copy-resources</goal>
@@ -29,6 +44,25 @@
               <resources>
                 <resource>
                   <directory>${basedir}/src/main/java/resources</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-jar-to-docker</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/docker</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${basedir}/target</directory>
+                  <includes>
+                    <include>serverless-lambda-1.0.0.jar</include>
+                  </includes>
                   <filtering>true</filtering>
                 </resource>
               </resources>

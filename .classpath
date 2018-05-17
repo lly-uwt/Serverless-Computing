@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="resource/*" kind="src" output="target/classes" path="src/main/java">
+	<classpathentry excluding="resource/*" including="**/*.java" kind="src" output="target/classes" path="src/main/java">
 		<attributes>
 			<attribute name="ignore_optional_problems" value="true"/>
 			<attribute name="optional" value="true"/>
