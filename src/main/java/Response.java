@@ -252,12 +252,12 @@ public class Response {
     public String toString() {
         return "value=" + this.getValue() + "\nuuid=" + this.getUuid() + "\ncpuusr="
                 + this.getCpuUsr() + "\ncpukrn=" + this.getCpuKrn() + "\ncutime="
-                + this.getCuTime() + "\ncstime=" + this.getCsTime() + "\nfile=\n"
-                + this.getValue() + "\nvmuptime=" + this.getVmuptime()
-                + "\nvmcpusteal=" + this.getVmcpusteal() + "\nvmcpuusr="
-                + this.getVmcpuusr() + "\nvmcpukrn=" + this.getVmcpukrn()
-                + "\nvmcpuidle=" + this.getVmcpuidle() + "\nbmname" + this.bmname
-                + "\nbmscore" + this.bmscore + "\nbmthreads" + this.bmthreads
-                + "\nbmtotalduration" + this.bmtotalduration;
+                + this.getCuTime() + "\ncstime=" + this.getCsTime() + "\nvmuptime="
+                + this.getVmuptime() + "\nvmcpusteal=" + this.getVmcpusteal()
+                + "\nvmcpuusr=" + this.getVmcpuusr() + "\nvmcpukrn="
+                + this.getVmcpukrn() + "\nvmcpuidle=" + this.getVmcpuidle()
+                + "\nbmname=" + this.bmname + "\nbmscore=" + this.bmscore
+                + "\nbmthreads=" + this.bmthreads + "\nbmtotalduration="
+                + this.bmtotalduration;
     }
 }
