@@ -4,6 +4,9 @@
   <groupId>uwt</groupId>
   <artifactId>serverless-lambda</artifactId>
   <version>1.0.0</version>
+  <prerequisites>
+    <maven>3.5.3</maven>
+  </prerequisites>
   <build>
     <resources>
       <resource>
@@ -21,6 +24,13 @@
           <filesets>
             <fileset>
               <directory>${basedir}/docker</directory>
+              <includes>
+                <include>serverless-lambda-1.0.0.jar</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+            <fileset>
+              <directory>${basedir}/TLP</directory>
               <includes>
                 <include>serverless-lambda-1.0.0.jar</include>
               </includes>
@@ -49,30 +59,11 @@
               </resources>
             </configuration>
           </execution>
-          <execution>
-            <id>copy-jar-to-docker</id>
-            <phase>validate</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${basedir}/docker</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${basedir}/target</directory>
-                  <includes>
-                    <include>serverless-lambda-1.0.0.jar</include>
-                  </includes>
-                  <filtering>true</filtering>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
         </executions>
       </plugin>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.6.0</version>
+        <version>3.7.0</version>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -85,13 +76,37 @@
       </plugin>
       <plugin>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.1.1</version>
         <executions>
           <execution>
             <phase>package</phase>
             <goals>
               <goal>shade</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <id>copy-to-other-dirs</id>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <echo>ANT TASK - copying files....</echo>
+                <copy>
+                  <fileset />
+                </copy>
+                <copy>
+                  <fileset />
+                </copy>
+              </target>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -108,7 +123,7 @@
       <dependency>
         <groupId>com.amazonaws</groupId>
         <artifactId>aws-java-sdk-bom</artifactId>
-        <version>1.11.328</version>
+        <version>1.11.332</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -120,4 +135,3 @@
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 </project>
-
