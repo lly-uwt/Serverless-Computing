@@ -19,8 +19,8 @@ for bm in ${benchmarks[@]}; do
    
     for cpu in ${cpuSetting[@]}; do
         echo $bm $cpu
-        for ((i=0; i<1; i++)); do
-            sudo docker update --cpus=$cpu tlp-container
+        sudo docker update --cpus=$cpu tlp-container
+        for ((i=0; i<5; i++)); do
             whole=$(sudo docker exec -it tlp-container bash -c "cd specjvm2008 ; java Main $bm 2 5 1 10")
             set -- $whole
 
