@@ -6,6 +6,7 @@ sudo docker build -t <pick-image-name> .
 sudo docker run -d -rm --name=<pick-name> <image-name>
 sudo docker run -it -d -rm --name=<pick-name> <image-name>
 sudo docker ps
+sudo docker update --cpus="1" <name/id>
 
 # delete everything
 sudo docker system prune # only dangling

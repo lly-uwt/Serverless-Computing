@@ -1,3 +1,6 @@
+cd ..; mvn clean package
+cd ..
+sudo docker rmi specjvm2008
 # Simulates COLD run on Docker
 sudo docker build -t specjvm2008 .
 #contid=`sudo docker run -m 512m --cpus=3.0 -d --rm specjvm2008`
