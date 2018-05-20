@@ -26,7 +26,7 @@ public class Main {
 
     private static void test() {
         String[] params = new String[13];
-        params[0] = "scimark.fft.small";
+        params[0] = "derby";
         params[1] = "-ict";
         params[2] = "-ikv";
         params[3] = "-crf";
