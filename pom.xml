@@ -18,7 +18,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
-	<repositories>  <!--for external jar dependency -->
+	<repositories>  <!--for external local jars dependency -->
 		<repository>
 			<id>Local repository</id>
 			<url>file://${basedir}/maven-local-repo</url>
@@ -36,18 +36,18 @@
 		</resources>
 		<plugins>
 			<plugin>
-				<artifactId>maven-clean-plugin</artifactId> <!--delete jar in docker -->
+				<artifactId>maven-clean-plugin</artifactId> <!--clean task -->
 				<version>3.1.0</version>
 				<configuration>
 					<filesets>
-						<fileset>
+						<fileset> <!--delete jar in docker directory -->
 							<directory>${basedir}/docker</directory>
 							<includes>
 								<include>serverless-lambda-1.0.0.jar</include>
 							</includes>
 							<followSymlinks>false</followSymlinks>
 						</fileset>
-						<fileset>
+						<fileset> <!--delete jar in TLP directory -->
 							<directory>${basedir}/TLP</directory>
 							<includes>
 								<include>serverless-lambda-1.0.0.jar</include>
@@ -71,7 +71,7 @@
 							<outputDirectory>${basedir}/target/resources</outputDirectory>
 							<resources>
 								<resource>
-									<directory>${basedir}/src/main/java/resources</directory>
+									<directory>${basedir}/resources</directory>
 									<filtering>true</filtering>
 								</resource>
 							</resources>
