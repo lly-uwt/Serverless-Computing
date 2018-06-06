@@ -159,8 +159,53 @@
 		</dependency>
 		<dependency>
 			<groupId>uwt</groupId> <!--external jar dependency -->
+			<artifactId>derby</artifactId>
+			<version>10.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>uwt</groupId> <!--external jar dependency -->
+			<artifactId>janino</artifactId>
+			<version>0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>uwt</groupId> <!--external jar dependency -->
+			<artifactId>javac</artifactId>
+			<version>0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>uwt</groupId> <!--external jar dependency -->
+			<artifactId>jcommon</artifactId>
+			<version>1.0.9</version>
+		</dependency>
+		<dependency>
+			<groupId>uwt</groupId> <!--external jar dependency -->
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>uwt</groupId> <!--external jar dependency -->
+			<artifactId>jl</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>uwt</groupId> <!--external jar dependency -->
 			<artifactId>specjvm</artifactId>
 			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>uwt</groupId> <!--external jar dependency -->
+			<artifactId>sunflow</artifactId>
+			<version>0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>uwt</groupId> <!--external jar dependency -->
+			<artifactId>Tidy</artifactId>
+			<version>0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>uwt</groupId> <!--external jar dependency -->
+			<artifactId>xom</artifactId>
+			<version>1.1</version>
 		</dependency>
 	</dependencies>
 </project>
