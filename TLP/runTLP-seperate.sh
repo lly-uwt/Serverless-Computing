@@ -30,8 +30,9 @@ benchmarks=(derby
 )
 
 cpuSetting=(1 2)
-echo 'uuid,uptime,bmName,#cpu,ops,duration' > all.csv
+
 for bm in ${benchmarks[@]}; do
+    echo 'uuid,uptime,bmName,#cpu,ops,duration' > $bm.csv
     for cpu in ${cpuSetting[@]}; do
         echo $bm $cpu
         sudo docker update --cpus=$cpu tlp-container
@@ -46,7 +47,7 @@ for bm in ${benchmarks[@]}; do
             echo "${13:8:10}"
             echo "${15:16:10}"
 
-            echo "${2:5:36}","${7:9:10}","$(sed -e 's/[[:space:]]*$//' <<<${12:7:20})",$cpu,"$(sed -e 's/[[:space:]]*$//' <<<${13:8:10})","$(sed -e 's/[[:space:]]*$//' <<<${15:16:10})" >> all.csv
+            echo "${2:5:36}","${7:9:10}","$(sed -e 's/[[:space:]]*$//' <<<${12:7:20})",$cpu,"$(sed -e 's/[[:space:]]*$//' <<<${13:8:10})","$(sed -e 's/[[:space:]]*$//' <<<${15:16:10})" >> $bm.csv
         done
     done
 done
