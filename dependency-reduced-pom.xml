@@ -33,6 +33,13 @@
               </includes>
               <followSymlinks>false</followSymlinks>
             </fileset>
+            <fileset>
+              <directory>${basedir}/expt1</directory>
+              <includes>
+                <include>serverless-lambda-1.0.0.jar</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
           </filesets>
         </configuration>
       </plugin>
@@ -96,6 +103,9 @@
             <configuration>
               <target>
                 <echo>ANT TASK - copying files....</echo>
+                <copy>
+                  <fileset />
+                </copy>
                 <copy>
                   <fileset />
                 </copy>
