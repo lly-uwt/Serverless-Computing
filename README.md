@@ -11,3 +11,7 @@ Build local Maven repository:
 mvn clean install:install-file -Dfile=specjvm.jar -DgroupId=uwt -DartifactId=specjvm -Dversion=1.0 -Dpackaging=jar -DlocalRepositoryPath=${basedir}/maven-local-repo
 ```
 http://www.mojohaus.org/versions-maven-plugin/
+
+Benchmarks that don't work on AWS Lambda:
+- derby: due to IO directory path error
+- xml.transform and xml.validation: unable to find xml.validation and xml.tranform directories in resources

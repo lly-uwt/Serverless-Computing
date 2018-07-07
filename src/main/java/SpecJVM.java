@@ -22,6 +22,10 @@ public class SpecJVM {
 		String warmupScore = "", score = "", threads = "";
 		ArrayList<String> ite = new ArrayList<String>();
 		
+	    // while (scanner.hasNextLine()) {
+        //     System.out.println(scanner.nextLine());
+        // }
+		
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
 			if (line.indexOf("Warmup") != -1 && line.indexOf("result") != -1)
