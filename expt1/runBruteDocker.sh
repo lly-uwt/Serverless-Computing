@@ -12,16 +12,18 @@ sudo docker run -it -d --rm --name=brute-container brute
 # whole=`cat ex-out.txt`
 
 benchmarks=(compress)
-
-# cpuSetting=(.2 .4 .6 .8 1 1.2 1.4 1.6 1.8 2.0)
-cpuSetting=(1) # testing
+cpuSetting=($(seq .1 .01 2))
+mem=128m
+loop=100
+params='2 5 1 10' #benchmarkThreads, warmuptime, iterations, iterationTime
+# cpuSetting=(1) # testing
 echo 'uuid,uptime,bmName,#cpu,ops,duration' > out-docker.csv
 for bm in ${benchmarks[@]}; do
     for cpu in ${cpuSetting[@]}; do
         echo $bm $cpu
-        sudo docker update --cpus=$cpu brute-container
-        for ((i=0; i<5; i++)); do
-            whole=$(sudo docker exec -it brute-container bash -c "cd specjvm2008 ; java Main $bm 2 5 1 10")
+        sudo docker update --cpus=$cpu --memory=$mem brute-container
+        for ((i=0; i<$loop; i++)); do
+            whole=$(sudo docker exec -it brute-container bash -c "cd specjvm2008 ; java Main $bm $params")
             set -- $whole
 
             echo "${2:5:36}"
