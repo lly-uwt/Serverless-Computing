@@ -1,0 +1,1 @@
+Deterministic compute-bound task in Javascript?
