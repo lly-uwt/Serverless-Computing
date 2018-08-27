@@ -4,7 +4,7 @@ loop=200
 wloop=10
 funcName=open-source
 # memorySetting=(384 512)
-echo 'newcontainer,uuid,uptime,bmName,memory,ops,duration' > out-lambda.csv
+echo 'newcontainer,uuid,uptime,bmName,#bt,memory,ops,duration' > out-lambda.csv
 for bm in ${benchmarks[@]}; do
     for memory in ${memorySetting[@]}; do
         echo $bm $memory
@@ -26,10 +26,11 @@ for bm in ${benchmarks[@]}; do
             newcont=`echo $output | jq -r '.newcontainer'`
 
             bmname=`echo $output | jq -r '.bmname'`
+            bt=`cat input.json | jq -r '.bt'`
             bmscore=`echo $output | jq -r '.bmscore'`
             duration=`echo $output | jq -r '.bmtotalduration'`
 
-            echo $newcont,$uuid,$vuptime,$bmname,$memory,$bmscore,$duration>> out-lambda.csv
+            echo $newcont,$uuid,$vuptime,$bmname,$bt,$memory,$bmscore,$duration>> out-lambda.csv
         done
     done
 done

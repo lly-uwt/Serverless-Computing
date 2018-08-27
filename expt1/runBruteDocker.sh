@@ -14,10 +14,11 @@ sudo docker run -it -d --rm --name=brute-container brute
 benchmarks=(compress)
 cpuSetting=($(seq .1 .01 2))
 mem=128m
-loop=100
-params='2 5 1 10' #benchmarkThreads, warmuptime, iterations, iterationTime
+loop=200
+bt=1
+params="2 $bt 1 10" #benchmarkThreads, warmuptime, iterations, iterationTime
 # cpuSetting=(1) # testing
-echo 'uuid,uptime,bmName,#cpu,ops,duration' > out-docker.csv
+echo 'uuid,uptime,bmName,#bt,#cpu,ops,duration' > out-docker.csv
 for bm in ${benchmarks[@]}; do
     for cpu in ${cpuSetting[@]}; do
         echo $bm $cpu
@@ -33,7 +34,7 @@ for bm in ${benchmarks[@]}; do
             echo "${13:8:10}"
             echo "${15:16:10}"
 
-            echo "${2:5:36}","${7:9:10}","$(sed -e 's/[[:space:]]*$//' <<<${12:7:20})",$cpu,"$(sed -e 's/[[:space:]]*$//' <<<${13:8:10})","$(sed -e 's/[[:space:]]*$//' <<<${15:16:10})" >> out-docker.csv
+            echo "${2:5:36}","${7:9:10}","$(sed -e 's/[[:space:]]*$//' <<<${12:7:20})",$bt,$cpu,"$(sed -e 's/[[:space:]]*$//' <<<${13:8:10})","$(sed -e 's/[[:space:]]*$//' <<<${15:16:10})" >> out-docker.csv
         done
     done
 done
