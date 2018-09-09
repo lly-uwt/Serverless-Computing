@@ -65,6 +65,7 @@ public class Response {
         this.vmcpusirq = vmcpusirq;
         this.vmcpusteal = vmcpusteal;
         this.vmuptime = vuptime;
+        this.newcontainer = newcontainer;
 
         this.bmname = bmname;
         this.bmscore = bmscore;
