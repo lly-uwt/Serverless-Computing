@@ -13,7 +13,7 @@ sudo docker system prune # only dangling
 sudo docker system prune -a
 
 # sudo bash
-docker rm $(docker ps -a -q) # delete all containers
+docker rm -f $(docker ps -a -q) # delete all containers
 docker rmi $(docker images -q) # delete all images
 
 
