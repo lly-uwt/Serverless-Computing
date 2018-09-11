@@ -88,6 +88,12 @@ public class Main {
                 return new LambdaLogger() {
 
                     @Override
+                    public void log(byte[] arg0) {
+                        // TODO Auto-generated method stub
+                        
+                    }
+
+                    @Override
                     public void log(String arg0) {
                         // TODO Auto-generated method stub
                         
