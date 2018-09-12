@@ -1,4 +1,5 @@
 target/
 docker/prime-count-1.0.0.jar
 expt1/prime-count-1.0.0.jar
+/docker/*.csv
 /expt1/*.csv

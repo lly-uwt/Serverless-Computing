@@ -2,6 +2,7 @@
 /docker/serverless-lambda-1.0.0.jar
 /TLP/serverless-lambda-1.0.0.jar
 /expt1/serverless-lambda-1.0.0.jar
+/docker/*.csv
 /TLP/*.csv
 /expt1/*.csv
 .vscode
