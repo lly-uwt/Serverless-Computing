@@ -23,8 +23,8 @@ for cpu in ${cpuSetting[@]}; do
         uuid="${2:5:36}"
         uptime="${7:9:10}"
 
-        totalPrimeNum="$(sed -e 's/[[:space:]]*$//' <<<${12:14:22})"
-        wallTime="$(sed -e 's/[[:space:]]*$//' <<<${13:9:15})"
+        totalPrimeNum="$(sed -e 's/[[:space:]]*$//' <<<${12:14:10})"
+        wallTime="$(sed -e 's/[[:space:]]*$//' <<<${13:9:10})"
 
         echo $time,$uuid,$uptime,$inputMax,$totalPrimeNum,$cpu,$wallTime
         echo $time,$uuid,$uptime,$inputMax,$totalPrimeNum,$cpu,$wallTime >> out-docker.csv

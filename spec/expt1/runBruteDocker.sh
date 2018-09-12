@@ -18,7 +18,7 @@ loop=200
 bt=1
 params="2 $bt 1 10" #benchmarkThreads, warmuptime, iterations, iterationTime
 # cpuSetting=(1) # testing
-echo 'uuid,uptime,bmName,#bt,#cpu,ops,duration' > out-docker.csv
+echo 'time,uuid,uptime,bmName,#bt,#cpu,ops,duration' > out-docker.csv
 for bm in ${benchmarks[@]}; do
     for cpu in ${cpuSetting[@]}; do
         echo $bm $cpu
@@ -26,15 +26,17 @@ for bm in ${benchmarks[@]}; do
         for ((i=0; i<$loop; i++)); do
             whole=$(sudo docker exec -it brute-container bash -c "cd specjvm2008 ; java Main $bm $params")
             set -- $whole
+            #line:offset:length
+            time="$(sed -e 's/[[:space:]]*$//' <<<${1:6:30})"
+            uuid="${2:5:36}"
+            uptime="${7:9:10}"
 
-            echo "${2:5:36}"
-            echo "${7:9:10}"
-            echo "${12:7:20}"
-            echo $cpu
-            echo "${13:8:10}"
-            echo "${15:16:10}"
+            bmName="$(sed -e 's/[[:space:]]*$//' <<<${12:7:20})"
+            ops="$(sed -e 's/[[:space:]]*$//' <<<${13:8:10})"
+            duration="$(sed -e 's/[[:space:]]*$//' <<<${15:16:10})"
 
-            echo "${2:5:36}","${7:9:10}","$(sed -e 's/[[:space:]]*$//' <<<${12:7:20})",$bt,$cpu,"$(sed -e 's/[[:space:]]*$//' <<<${13:8:10})","$(sed -e 's/[[:space:]]*$//' <<<${15:16:10})" >> out-docker.csv
+            echo $time,$uuid,$uptime,$bmName,$bt,$cpu,$ops,$duration
+            echo $time,$uuid,$uptime,$bmName,$bt,$cpu,$ops,$duration >> out-docker.csv
         done
     done
 done

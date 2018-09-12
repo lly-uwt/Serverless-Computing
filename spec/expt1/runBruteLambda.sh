@@ -4,7 +4,7 @@ loop=200
 wloop=10
 funcName=open-source
 # memorySetting=(384 512)
-echo 'newcontainer,uuid,uptime,bmName,#bt,memory,ops,duration' > out-lambda.csv
+echo 'newcontainer,time,uuid,uptime,bmName,#bt,memory,ops,duration' > out-lambda.csv
 for bm in ${benchmarks[@]}; do
     for memory in ${memorySetting[@]}; do
         echo $bm $memory
@@ -14,9 +14,8 @@ for bm in ${benchmarks[@]}; do
         done
         for ((i=0; i<$loop; i++)); do
             output=`aws lambda invoke --function-name $funcName --payload file://input.json /dev/stdout | head -n 1 | head -c -2 ; echo`
-            echo $output
-            # set -- $whole
             
+            time=`echo $output | jq -r '.value'`
             uuid=`echo $output | jq -r '.uuid'`
             cpuusr=`echo $output | jq -r '.cpuUsr'`
             cpukrn=`echo $output | jq -r '.cpuKrn'`
@@ -30,7 +29,8 @@ for bm in ${benchmarks[@]}; do
             bmscore=`echo $output | jq -r '.bmscore'`
             duration=`echo $output | jq -r '.bmtotalduration'`
 
-            echo $newcont,$uuid,$vuptime,$bmname,$bt,$memory,$bmscore,$duration>> out-lambda.csv
+            echo $newcont,$time,$uuid,$vuptime,$bmname,$bt,$memory,$bmscore,$duration
+            echo $newcont,$time,$uuid,$vuptime,$bmname,$bt,$memory,$bmscore,$duration>> out-lambda.csv
         done
     done
 done

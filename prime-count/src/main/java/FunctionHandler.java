@@ -17,7 +17,7 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 public class FunctionHandler implements RequestHandler<Request, Response> {
 
-	private int newContainer;
+	private int newContainer = -1;
 	private String uuid;
 
 	public Response handleRequest(Request request, Context context) {
@@ -25,6 +25,7 @@ public class FunctionHandler implements RequestHandler<Request, Response> {
 		File f = new File("/tmp/container-id");
 		Path p = Paths.get("/tmp/container-id");
 		if (f.exists()) {
+			newContainer = 0;
 			try (BufferedReader br = Files.newBufferedReader(p)) {
 				uuid = br.readLine();
 				br.close();
