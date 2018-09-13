@@ -1,42 +1,71 @@
-const si = require("systeminformation")
+const { spawn } = require('child_process')
+let processes
+let infos
+let timeup
 
 exports.handler = (event, context, callback) => {
+  processes = []
+  infos = []
+  timeup = false
 
+  spawnLoads()
+  getInfo()
 
-
-  //(error, success)
-  callback(null, {})
+  setTimeout(() => {
+    callback(null, JSON.stringify(infos))
+    timeup = true
+  }, 10000) //(error, success)
 }
 
 exports.run = () => {
   this.handler(null, null, (error, result) => {
-    if(error) console.error(error)
-    console.log(result)
+    if (error) console.error(error)
+    // console.log(result)
+
+    require('fs').writeFile('output.json', result, err => {
+      if (err) console.error(err)
+      console.log('output.json created')
+    })
   })
 }
 
 // spawn child processes
-function spawn(){
-
+function spawnLoads() {
+  for (let i = 0; i < 4; i++) {
+    const procs = spawn('sha1sum', ['/dev/zero', '&'])
+    processes.push(procs)
+  }
 }
 
+function killLoads() {
+  for (const child of processes) {
+    child.kill('SIGINT')
+  }
+}
 
 function getInfo() {
-//   si.processes(data => {
-//     console.log("CPU-Information:")
-//     console.log(data.running)
-//     for (let d of data.list) {
-//       // console.log(d)
-//       if (d.name == "sha1sum") console.log(d)
-//     }
-//   })
+  let count = 0
+  const id = setInterval(() => {
+    if (timeup) {
+      clearInterval(id)
+      killLoads()
+      return
+    }
+    let procsArr = [], totalPCPU = 0
+    const procs = spawn('ps', ['-o', '%c%C'])
+    procs.stdout.on('data', data => {
+      let str = data.toString()
+      str = str.replace('%CPU','').replace('COMMAND','').replace(/ +|\n/g, ' ').trim()
+      str = str.split(' ')
 
-  si.processes(data => {
-    console.log("CPU-Information:")
-    for(const x of data.list)
-        if(x.state == 'running')
-            console.log(x)
-  })
+      for(let i = 0; i < str.length; i+=2){
+        totalPCPU += parseInt(str[i+1])
+        procsArr.push({name: str[i], pcpu: str[i+1]})
+      }
+    })
+
+    procs.on('close', existCode => {
+      infos.push({ index: count = count + 1, data: procsArr, totalPCPU: totalPCPU })
+    })
+  }, 1000)
 }
-
-
