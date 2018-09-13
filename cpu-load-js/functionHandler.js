@@ -12,20 +12,21 @@ exports.handler = (event, context, callback) => {
   getInfo()
 
   setTimeout(() => {
-    callback(null, JSON.stringify(infos))
+    callback(null, infos)
     timeup = true
-  }, 10000) //(error, success)
+  }, 5000) //(error, success)
 }
 
-exports.run = () => {
+exports.run = (wantOutputFile) => {
   this.handler(null, null, (error, result) => {
     if (error) console.error(error)
-    // console.log(result)
+    console.log(JSON.stringify(result))
 
-    require('fs').writeFile('output.json', result, err => {
-      if (err) console.error(err)
-      console.log('output.json created')
-    })
+    if (wantOutputFile)
+      require('fs').writeFile('output.json', result, err => {
+        if (err) console.error(err)
+        console.log('output.json created')
+      })
   })
 }
 
@@ -55,17 +56,17 @@ function getInfo() {
     const procs = spawn('ps', ['-o', '%c%C'])
     procs.stdout.on('data', data => {
       let str = data.toString()
-      str = str.replace('%CPU','').replace('COMMAND','').replace(/ +|\n/g, ' ').trim()
+      str = str.replace('%CPU', '').replace('COMMAND', '').replace(/ +|\n/g, ' ').trim()
       str = str.split(' ')
 
-      for(let i = 0; i < str.length; i+=2){
-        totalPCPU += parseInt(str[i+1])
-        procsArr.push({name: str[i], pcpu: str[i+1]})
+      for (let i = 0; i < str.length; i += 2) {
+        totalPCPU += parseInt(str[i + 1])
+        procsArr.push(`${str[i]}:${str[i + 1]}` )
       }
     })
 
     procs.on('close', existCode => {
-      infos.push({ index: count = count + 1, data: procsArr, totalPCPU: totalPCPU })
+      infos.push({ index: count = count + 1, data: procsArr.join(';'), totalPCPU: totalPCPU })
     })
   }, 1000)
 }
