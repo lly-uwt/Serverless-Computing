@@ -16,6 +16,7 @@ public class SpecJVM {
         timestamp = System.currentTimeMillis() - timestamp;
 		String output = OutputCapturer.stop();
 		
+//		System.out.println(output);
 		Scanner scanner = new Scanner(output);
 
 		int i = 1;
