@@ -9,7 +9,7 @@ cpuSetting=($(seq .1 .01 2))
 mem=128m
 loop=2
 # cpuSetting=(1) # testing
-echo '#cpu,indexBatch,details,total' > out-docker.csv
+echo '#cpu,indexBatch,processes,totalpcpu' > out-docker.csv
 for cpu in ${cpuSetting[@]}; do
     sudo docker update --cpus=$cpu --memory=$mem brute-container
     for ((i=0; i<$loop; i++)); do

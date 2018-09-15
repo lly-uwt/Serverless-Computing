@@ -2,6 +2,8 @@ const { spawn } = require('child_process')
 let processes
 let infos
 let timeup
+let duration = 50000
+let step = 2000
 
 exports.handler = (event, context, callback) => {
   processes = []
@@ -14,7 +16,7 @@ exports.handler = (event, context, callback) => {
   setTimeout(() => {
     callback(null, infos)
     timeup = true
-  }, 5000) //(error, success)
+  }, duration) //(error, success)
 }
 
 exports.run = (wantOutputFile) => {
@@ -32,7 +34,7 @@ exports.run = (wantOutputFile) => {
 
 // spawn child processes
 function spawnLoads() {
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 2; i++) {
     const procs = spawn('sha1sum', ['/dev/zero', '&'])
     processes.push(procs)
   }
@@ -60,7 +62,7 @@ function getInfo() {
       str = str.split(' ')
 
       for (let i = 0; i < str.length; i += 2) {
-        totalPCPU += parseInt(str[i + 1])
+        totalPCPU +=  parseFloat(str[i + 1])
         procsArr.push(`${str[i]}:${str[i + 1]}` )
       }
     })
@@ -68,5 +70,5 @@ function getInfo() {
     procs.on('close', existCode => {
       infos.push({ index: count = count + 1, data: procsArr.join(';'), totalPCPU: totalPCPU })
     })
-  }, 1000)
+  }, step)
 }
