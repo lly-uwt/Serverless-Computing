@@ -4,6 +4,7 @@ let infos
 let timeup
 let duration = 50000
 let step = 2000
+let childNum = 4
 
 exports.handler = (event, context, callback) => {
   processes = []
@@ -34,7 +35,7 @@ exports.run = (wantOutputFile) => {
 
 // spawn child processes
 function spawnLoads() {
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < childNum; i++) {
     const procs = spawn('sha1sum', ['/dev/zero', '&'])
     processes.push(procs)
   }
