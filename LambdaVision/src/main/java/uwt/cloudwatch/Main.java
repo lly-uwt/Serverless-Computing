@@ -25,8 +25,8 @@ import com.amazonaws.services.lambda.model.LogType;
 import com.amazonaws.services.lambda.model.UpdateFunctionConfigurationRequest;
 
 public class Main {
-	private static List<String> data = new ArrayList<String>() ;
-	private static final String FUNC_NAME = "test2";
+	private static List<String> data = new ArrayList<String>();
+	private static final String FUNC_NAME = "is-prime";
 	private static final int LOOPS = 2;
 
 	public static void main(String[] args) {
@@ -38,7 +38,7 @@ public class Main {
 //				.withCredentials(new AWSStaticCredentialsProvider(awsCreds)).build();
 
 		int[] array = new int[91];
-//		array = new int[2]; //test
+		array = new int[2]; //test
 		Arrays.setAll(array, i -> i * 32 + 128);
 
 		AWSLambda awsLambda = AWSLambdaClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
@@ -51,7 +51,8 @@ public class Main {
 				UpdateFunctionConfigurationRequest config = new UpdateFunctionConfigurationRequest()
 						.withFunctionName(FUNC_NAME).withMemorySize(mem);
 				awsLambda.updateFunctionConfiguration(config);
-				InvokeRequest invokeRequest = new InvokeRequest().withFunctionName(FUNC_NAME).withLogType(LogType.Tail);
+				InvokeRequest invokeRequest = new InvokeRequest().withFunctionName(FUNC_NAME).withLogType(LogType.Tail)
+						.withPayload("{\"inputMax\": \"100000\"}");
 
 				InvokeResult invokeResult = null;
 
@@ -68,58 +69,57 @@ public class Main {
 	}
 
 	private static void saveResult(InvokeResult invokeResult) {
-		String log = new String(Base64.getDecoder().decode(invokeResult.getLogResult()),
-				Charset.forName("UTF-8"));
+
+		String log = new String(Base64.getDecoder().decode(invokeResult.getLogResult()), Charset.forName("UTF-8"));
 		List<String> array = tokenizerArray(log.substring(log.indexOf("Duration")));
+		String payload  = new String(invokeResult.getPayload().array());
+		payload = payload.replace(',', ';');
 		
 		// Name,MemorySize,MemoryUsed,Duration,BilledDuration
-		String line = String.format("%s,%s,%s,%s,%s", FUNC_NAME, array.get(8), array.get(12), array.get(1), array.get(4));
+		String line = String.format("%s,%s,%s,%s,%s,%s", FUNC_NAME, array.get(8), array.get(12), array.get(1),
+				array.get(4), payload);
 		System.out.println(line);
 		data.add(line);
 	}
 
 	private static List<String> tokenizerArray(String str) {
-        StringTokenizer st = new StringTokenizer(str, " ");
-        List<String> elements = new ArrayList<String>();
- 
-        while(st.hasMoreTokens()) {
-            elements.add(st.nextToken());
-        }
-        
+		StringTokenizer st = new StringTokenizer(str, " ");
+		List<String> elements = new ArrayList<String>();
+
+		while (st.hasMoreTokens()) {
+			elements.add(st.nextToken());
+		}
+
 //        for(String element : elements) {
 //            System.out.println(element);
 //        }
-        return elements;
+		return elements;
 	}
 
 	private static void writeToFile() {
-        Path p = Paths.get("data.csv");
-		try (BufferedWriter bw = Files.newBufferedWriter(p, StandardCharsets.US_ASCII, StandardOpenOption.CREATE))
-        {
+		Path p = Paths.get("data.csv");
+		try (BufferedWriter bw = Files.newBufferedWriter(p, StandardCharsets.US_ASCII, StandardOpenOption.CREATE)) {
 			writeContent(bw);
 			bw.close();
-        }
-        catch (IOException ioe)
-        {
-            ioe.printStackTrace();
-        }
-		
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+
 	}
-	
+
 	private static void writeContent(BufferedWriter bw) throws IOException {
-		bw.write("Name,MemorySize,MemoryUsed,Duration,BilledDuration");
+		bw.write("Name,MemorySize,MemoryUsed,Duration,BilledDuration,Payload");
 		bw.newLine();
-		for(String line: data) {
+		for (String line : data) {
 			bw.write(line);
 			bw.newLine();
 		}
-		
+
 	}
 
 	private static void printInvokeResult(InvokeResult invokeResult) {
 		System.out.println(invokeResult);
-		String log = new String(Base64.getDecoder().decode(invokeResult.getLogResult()),
-				Charset.forName("UTF-8"));
+		String log = new String(Base64.getDecoder().decode(invokeResult.getLogResult()), Charset.forName("UTF-8"));
 		System.out.println(log);
 	}
 }
