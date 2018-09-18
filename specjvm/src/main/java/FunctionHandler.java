@@ -46,7 +46,7 @@ public class FunctionHandler implements RequestHandler<Request, Response> {
 				bw.write(uuid);
 				bw.close();
 			} catch (IOException ioe) {
-				return new Response("Error reading existing UUID", uuid);
+				return new Response("Error writing new UUID", uuid);
 			}
 		}
 		
