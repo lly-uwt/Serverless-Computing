@@ -56,15 +56,14 @@ function getInfo() {
       return
     }
     let procsArr = [], totalPCPU = 0
-    const procs = spawn('ps', ['-o', '%c%C'])
+    const procs = spawn('ps', ['-o', '%cpu,cpuid,psr,comm'])
     procs.stdout.on('data', data => {
       let str = data.toString()
-      str = str.replace('%CPU', '').replace('COMMAND', '').replace(/ +|\n/g, ' ').trim()
-      str = str.split(' ')
+      str = str.substring(str.indexOf('COMMAND') + 7).replace(/ +|\n/g, ' ').trim().replace(/ +/g, ' ').split(' ')
 
-      for (let i = 0; i < str.length; i += 2) {
-        totalPCPU +=  parseFloat(str[i + 1])
-        procsArr.push(`${str[i]}:${str[i + 1]}` )
+      for (let i = 0; i < str.length; i += 4) {
+        totalPCPU += parseFloat(str[i])
+        procsArr.push(`%cpu:${str[i]}-cpuid:${str[i + 1]}-psr:${str[i + 2]}-cmd:${str[i + 3]}`)
       }
     })
 
