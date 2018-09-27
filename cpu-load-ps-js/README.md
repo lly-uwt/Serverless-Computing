@@ -1,7 +1,3 @@
-```sh
-# Old idea
-npm install systeminformation
-```
 
 [mmon](https://www.npmjs.com/package/mmon) may useful to test this
 
