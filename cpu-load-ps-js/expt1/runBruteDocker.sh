@@ -1,3 +1,4 @@
+cp ../dockerfile ./
 cp ../functionHandler.js ./
 
 sudo docker stop brute-container
