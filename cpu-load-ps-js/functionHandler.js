@@ -26,7 +26,7 @@ exports.run = (wantOutputFile) => {
     console.log(JSON.stringify(result))
 
     if (wantOutputFile)
-      require('fs').writeFile('output.json', result, err => {
+      require('fs').writeFile('output.json', JSON.stringify(result), err => {
         if (err) console.error(err)
         console.log('output.json created')
       })
@@ -56,19 +56,19 @@ function getInfo() {
       return
     }
     let procsArr = [], totalPCPU = 0
-    const procs = spawn('ps', ['-o', '%cpu,cpuid,psr,comm'])
+    const procs = spawn('ps', ['-o', 'pid,%cpu,cpuid,psr,comm'])
     procs.stdout.on('data', data => {
       let str = data.toString()
       str = str.substring(str.indexOf('COMMAND') + 7).replace(/ +|\n/g, ' ').trim().replace(/ +/g, ' ').split(' ')
 
-      for (let i = 0; i < str.length; i += 4) {
-        totalPCPU += parseFloat(str[i])
-        procsArr.push(`%cpu:${str[i]}-cpuid:${str[i + 1]}-psr:${str[i + 2]}-cmd:${str[i + 3]}`)
+      for (let i = 0; i < str.length; i += 5) {
+        totalPCPU += parseFloat(str[i + 1])
+        procsArr.push(`pid:${str[i]}-%cpu:${str[i + 1]}-cpuid:${str[i + 2]}-psr:${str[i + 3]}-cmd:${str[i + 4]}`)
       }
     })
 
     procs.on('close', existCode => {
-      infos.push({ index: count = count + 1, data: procsArr.join(';'), totalPCPU: totalPCPU })
+      infos.push({ index: count = count + 1, data: procsArr.join(';'), totalPCPU: totalPCPU.toFixed(2) })
     })
   }, step)
 }

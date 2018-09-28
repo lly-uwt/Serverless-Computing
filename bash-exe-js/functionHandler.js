@@ -39,12 +39,9 @@ function getInfo() {
     const procs = exec(
       'bash -c "(sleep 1;echo 1) | TERM=xterm script -c top & sleep 2;killall script" | grep ^%Cpu',
       (error, stdout, stderr) => {
-        let str = stdout
-        procsArr.push(str)
-        if (error !== null) {
-          str = error
-          procsArr.push(str)
-        }
+        procsArr.push({error: error})
+        procsArr.push({stdout:stdout})
+        procsArr.push({stderr: stderr})
       }
     )
     procs.on(
