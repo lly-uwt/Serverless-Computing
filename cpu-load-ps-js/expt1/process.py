@@ -54,7 +54,6 @@ def processed(inputName, optName, optMName, optVLname, attrName):
         print(optName + ' created!')
         print(optVLname + ' created!')
         print(optMName + ' created!')
-        graph()
 
     except Exception as error:
         print('Error:', error)
