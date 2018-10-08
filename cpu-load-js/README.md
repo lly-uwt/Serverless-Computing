@@ -11,5 +11,3 @@ Docker command for clean up:
 sudo docker system prune
 docker rm -f $(docker ps -a -q) # in sudo bash
 ```
-
-Reference: https://rosettacode.org/wiki/Linux_CPU_utilization
