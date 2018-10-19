@@ -14,7 +14,7 @@ public class Response {
     int pid, newcontainer;
     long vmcpuusr, vmcpunice, vmcpukrn, vmcpuidle, vmcpuiowait;
     long vmcpuirq, vmcpusirq, vmcpusteal, vmuptime;
-    int totalPrimeNum;
+    String output;
     long wallTime;
 
     public Response() {
@@ -45,7 +45,7 @@ public class Response {
     public Response(String value, String uuid, long cpuusr, long cpukrn,
             long cutime, long cstime, long vmcpuusr, long vmcpunice, long vmcpukrn,
             long vmcpuidle, long vmcpuiowait, long vmcpuirq, long vmcpusirq,
-            long vmcpusteal, long vuptime, int newcontainer, long wallTime) {
+            long vmcpusteal, long vuptime, int newcontainer, String output, long wallTime) {
 
         this.value = value;
         this.uuid = uuid;
@@ -64,6 +64,7 @@ public class Response {
         this.vmuptime = vuptime;
         this.newcontainer = newcontainer;
 
+        this.output = output;
         this.wallTime = wallTime;
     }
 
@@ -211,15 +212,19 @@ public class Response {
         this.newcontainer = newcontainer;
     }
 
-    public int getTotalPrimeNum() {
-        return this.totalPrimeNum;
+    public String getOutput() {
+        return this.output;
+    }
+    
+    public void setOutput(String output) {
+        this.output = output;
     }
 
     public long getWallTime() {
         return this.wallTime;
     }
 
-    public void setBmscore(long wallTime) {
+    public void setWallTime(long wallTime) {
         this.wallTime = wallTime;
     }
 
@@ -231,6 +236,6 @@ public class Response {
                 + this.getVmuptime() + "\nvmcpusteal=" + this.getVmcpusteal()
                 + "\nvmcpuusr=" + this.getVmcpuusr() + "\nvmcpukrn="
                 + this.getVmcpukrn() + "\nvmcpuidle=" + this.getVmcpuidle()
-                + "\nwalltime=" + this.wallTime;
+                + "\noutput=" + this.output +"\nwalltime=" + this.wallTime;
     }
 }

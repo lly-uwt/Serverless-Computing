@@ -224,7 +224,7 @@ public class Response {
         return this.wallTime;
     }
 
-    public void setBmscore(long wallTime) {
+    public void setWallTime(long wallTime) {
         this.wallTime = wallTime;
     }
 

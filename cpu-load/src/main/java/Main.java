@@ -5,7 +5,7 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 public class Main {
     public static void main(String[] args) {
-//        test();
+//        test(); // for windows, it doesn't have sha1sum so it will crash
         run(args);
     }
 
