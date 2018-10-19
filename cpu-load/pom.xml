@@ -1,0 +1,138 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>uwt</groupId>
+  <artifactId>cpu-load</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <build>
+    <plugins>
+    <plugin>
+        <artifactId>maven-clean-plugin</artifactId> <!--clean task -->
+        <version>3.1.0</version>
+        <configuration>
+          <filesets>
+            <fileset> <!--delete jar in docker directory -->
+              <directory>${basedir}/docker</directory>
+              <includes>
+                <include>cpu-load-1.0.0.jar</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+            <fileset> <!--delete jar in TLP directory -->
+              <directory>${basedir}/TLP</directory>
+              <includes>
+                <include>cpu-load-1.0.0.jar</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+            <fileset> <!--delete jar in TLP directory -->
+              <directory>${basedir}/expt1</directory>
+              <includes>
+                <include>cpu-load-1.0.0.jar</include>
+              </includes>
+              <followSymlinks>false</followSymlinks>
+            </fileset>
+          </filesets>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>Main</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <encoding>UTF-8</encoding>
+          <forceJavacCompilerUse>true</forceJavacCompilerUse>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <createDependencyReducedPom>false</createDependencyReducedPom>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+       <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <id>copy-to-other-dirs</id>
+            <phase>package</phase>
+            <configuration>
+              <target>
+                <echo>ANT TASK - copying files....</echo>
+                <copy todir="${basedir}/docker" overwrite="true"
+                  flatten="true">
+                  <fileset dir="${basedir}/target"
+                    includes="cpu-load-1.0.0.jar ">
+                  </fileset>
+                </copy>
+                <copy todir="${basedir}/expt1" overwrite="true"
+                  flatten="true">
+                  <fileset dir="${basedir}/target"
+                    includes="cpu-load-1.0.0.jar "></fileset>
+                </copy>
+              </target>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.amazonaws</groupId>
+        <artifactId>aws-java-sdk-bom</artifactId>
+        <version>1.11.406</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-lambda-java-core</artifactId>
+      <version>1.2.0</version>
+    </dependency>
+  </dependencies>
+</project>
