@@ -2,9 +2,9 @@ const { spawn } = require('child_process')
 let processes
 let infos
 let timeup
-let duration = 50000
-let step = 1000
-let childNum = 4
+const duration = 50000
+const step = 1000
+const childNum = 4
 
 exports.handler = (event, context, callback) => {
   processes = []
@@ -55,20 +55,24 @@ function getInfo() {
       killLoads()
       return
     }
-    let procsArr = [], totalPCPU = 0
+    let procsArr = [], totalPCPU = 0, cpu0 = 0, cpu1 = 0 
     const procs = spawn('ps', ['-o', 'pid,%cpu,cpuid,comm'])
     procs.stdout.on('data', data => {
       let str = data.toString()
       str = str.substring(str.indexOf('COMMAND') + 7).replace(/ +|\n/g, ' ').trim().replace(/ +/g, ' ').split(' ')
 
-      for (let i = 0; i < str.length; i += 5) {
+      for (let i = 0; i < str.length; i += 4) {
         totalPCPU += parseFloat(str[i + 1])
-        procsArr.push(`pid:${str[i]}-%cpu:${str[i + 1]}-cpuid:${str[i + 2]}-psr:${str[i + 3]}-cmd:${str[i + 4]}`)
+        if(str[i + 2] == 0)
+          cpu0 += parseFloat(str[i + 1])
+        else
+          cpu1 += parseFloat(str[i + 1])
+        procsArr.push(`pid:${str[i]}-%cpu:${str[i + 1]}-cpuid:${str[i + 2]}-cmd:${str[i + 3]}`)
       }
     })
 
     procs.on('close', existCode => {
-      infos.push({ index: count = count + 1, data: procsArr.join(';'), totalPCPU: totalPCPU.toFixed(2) })
+      infos.push({ index: count = count + 1, data: procsArr.join(';'), cpu0:cpu0, cpu1: cpu1, totalPCPU: totalPCPU.toFixed(2) })
     })
   }, step)
 }
