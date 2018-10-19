@@ -55,7 +55,7 @@ function getInfo() {
       killLoads()
       return
     }
-    let procsArr = [], totalPCPU = 0, cpu0 = 0, cpu1 = 0 
+    let procsArr = [], totalPCPU = 0, cpu0 = 0, cpu1 = 0
     const procs = spawn('ps', ['-o', 'pid,%cpu,cpuid,comm'])
     procs.stdout.on('data', data => {
       let str = data.toString()
@@ -72,7 +72,13 @@ function getInfo() {
     })
 
     procs.on('close', existCode => {
-      infos.push({ index: count = count + 1, data: procsArr.join(';'), cpu0:cpu0, cpu1: cpu1, totalPCPU: totalPCPU.toFixed(2) })
+      infos.push({
+        index: count = count + 1,
+        data: procsArr.join(';'),
+        cpu0: parseFloat(cpu0.toFixed(2)),
+        cpu1: parseFloat(cpu1.toFixed(2)),
+        totalPCPU: parseFloat(totalPCPU.toFixed(2))
+      })
     })
   }, step)
 }
