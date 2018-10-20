@@ -1,4 +1,4 @@
-run js `node -e 'require("./functionHandler").run()'`
+run js `node -e 'require("./functionHandler").run(2, true)'`
 
 loads command
 ```sh
