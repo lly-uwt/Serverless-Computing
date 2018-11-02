@@ -8,16 +8,19 @@ sudo docker run -it -d --rm --name=brute-container brute
 
 cpuSetting=($(seq .1 .01 2))
 mem=128m
-loop=2
+loop=5
+wloop=2
 childs=(2 3 4)
-# cpuSetting=(1 2) # testing
+cpuSetting=(1 2) # testing
 
 for child in ${childs[@]}; do
-    echo 'childs,#cpu,newContainer,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-docker-child$child.csv
+    echo 'childs,#cpu,newContainer,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-docker-child$child-loop$loop.csv
 
     for cpu in ${cpuSetting[@]}; do
         sudo docker update --cpus=$cpu --memory=$mem brute-container
-
+        for ((x=0; x<$wloop; x++)); do
+            sudo docker exec -it brute-container bash -c 'node -e "require(\"./functionHandler\").run('$child')"'
+        done
         for ((i=0; i<$loop; i++)); do
             whole=$(sudo docker exec -it brute-container bash -c 'node -e "require(\"./functionHandler\").run('$child')"')
 
@@ -34,7 +37,7 @@ for child in ${childs[@]}; do
                 
 
                 echo $child,$cpu,$newContainer,$uuid,$index,$data,$cpu0,$cpu1,$pcpu,$overhead
-                echo $child,$cpu,$newContainer,$uuid,$index,$data,$cpu0,$cpu1,$pcpu,$overhead >> out-docker-child$child.csv
+                echo $child,$cpu,$newContainer,$uuid,$index,$data,$cpu0,$cpu1,$pcpu,$overhead >> out-docker-child$child-loop$loop.csv
             done
         done
     done
