@@ -45,7 +45,7 @@ function getInfo() {
         ls = data.toString()
       })
       const procs = exec(
-        'LD_LIBRARY_PATH=/tmp  /tmp/sysbench --test=cpu --cpu-max-prime=200 run',
+        'LD_LIBRARY_PATH=/tmp  /tmp/sysbench cpu --cpu-max-prime=200 run',
         (error, stdout, stderr) => {
           procsArr.push({ error: error })
           procsArr.push({ stdout: stdout })
