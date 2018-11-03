@@ -4,8 +4,8 @@ const fs = require('fs')
 let processes
 let infos
 let timeup
-let duration = 50000
-let childNum = 4
+const duration = 30000
+const childNum = 4
 
 exports.handler = (event, context, callback) => {
   processes = []

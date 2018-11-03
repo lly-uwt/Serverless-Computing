@@ -2,9 +2,9 @@ const { spawn } = require('child_process')
 let processes
 let infos
 let timeup
-let duration = 50000
-let step = 2000
-let childNum = 4
+const duration = 30000
+const step = 1000
+const childNum = 4
 
 exports.handler = (event, context, callback) => {
   processes = []

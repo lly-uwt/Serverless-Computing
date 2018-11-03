@@ -3,7 +3,7 @@ childs=(2 3 4)
 loop=5
 wloop=2
 funcName=cpu-load
-memorySetting=(128 256) # testing
+# memorySetting=(128 256) # testing
 for child in ${childs[@]}; do
     echo 'childs,memory,newContainer,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-lambda-child$child-loop$loop.csv
     for memory in ${memorySetting[@]}; do

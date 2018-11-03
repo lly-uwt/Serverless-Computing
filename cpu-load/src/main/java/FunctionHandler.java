@@ -33,7 +33,7 @@ public class FunctionHandler implements RequestHandler<Request, Response> {
 	private JSONArray jArray = new JSONArray();
 	private int inputChilds;
 	private int count = 0;
-	private final int DURATION = 50000;
+	private final int DURATION = 30000;
 	private final int STEP = 1000;
 
 	public Response handleRequest(Request request, Context context) {

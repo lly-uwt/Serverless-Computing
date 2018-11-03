@@ -5,7 +5,7 @@ let timeup
 let newContainer = null
 let uuid = null
 const path = '/tmp/container-id'
-const duration = 50000
+const duration = 30000
 const step = 1000
 
 exports.handler = (event, context, callback) => {

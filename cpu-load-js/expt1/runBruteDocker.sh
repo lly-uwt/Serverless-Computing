@@ -11,7 +11,7 @@ mem=128m
 loop=5
 wloop=2
 childs=(2 3 4)
-cpuSetting=(1 2) # testing
+# cpuSetting=(1 2) # testing
 
 for child in ${childs[@]}; do
     echo 'childs,#cpu,newContainer,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-docker-child$child-loop$loop.csv
