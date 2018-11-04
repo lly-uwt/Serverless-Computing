@@ -26,8 +26,7 @@ public class CpuTime {
 
 	@Override
 	public String toString() {
-		return "utime=" + utime + " stime=" + stime + " cutime=" + cutime
-				+ " cstime=" + cstime + " ";
+		return "utime=" + utime + " stime=" + stime + " cutime=" + cutime + " cstime=" + cstime + " ";
 	}
 
 	public static CpuTime getCpuUtilization() {
@@ -44,15 +43,13 @@ public class CpuTime {
 				sb.append("Error reading file=" + filename);
 			}
 			String params[] = text.split(" ");
-			return new CpuTime(Long.parseLong(params[13]),
-					Long.parseLong(params[14]), Long.parseLong(params[15]),
+			return new CpuTime(Long.parseLong(params[13]), Long.parseLong(params[14]), Long.parseLong(params[15]),
 					Long.parseLong(params[16]));
 		} else
 			return new CpuTime();
 	}
 
 	public static CpuTime getCpuTimeDiff(CpuTime c1, CpuTime c2) {
-		return new CpuTime(c2.utime - c1.utime, c2.stime - c1.stime,
-				c2.cutime - c1.cutime, c2.cstime - c1.cstime);
+		return new CpuTime(c2.utime - c1.utime, c2.stime - c1.stime, c2.cutime - c1.cutime, c2.cstime - c1.cstime);
 	}
 }

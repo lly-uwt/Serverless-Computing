@@ -78,7 +78,7 @@ public class FunctionHandler implements RequestHandler<Request, Response> {
 			e.printStackTrace();
 		}
 //		System.out.println(jArray.toString());
-		String output =  jArray.toString();
+		String output = jArray.toString();
 		wallTime = System.currentTimeMillis() - wallTime;
 
 		CpuTime c2 = CpuTime.getCpuUtilization();
@@ -123,7 +123,7 @@ public class FunctionHandler implements RequestHandler<Request, Response> {
 					BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
 					String s = null;
-					double totalPCPU = 0, cpu0 = 0, cpu1 = 0;
+					double totalPCPU = 0, cpu0 = 0, cpu1 = 0, javaOverhead = 0;
 					boolean firstLine = true;
 					ArrayList<String> procsArr = new ArrayList<String>();
 					while ((s = stdInput.readLine()) != null) {
@@ -141,8 +141,10 @@ public class FunctionHandler implements RequestHandler<Request, Response> {
 						double cpu = Double.parseDouble(strArray.get(1));
 						int cpuid = Integer.parseInt(strArray.get(2));
 						String cmd = strArray.get(3);
-
+						
 						totalPCPU += cpu;
+				        if (cmd.equals("java"))
+				            javaOverhead = cpu;
 						if (cpuid == 0)
 							cpu0 += cpu;
 						else
@@ -155,6 +157,7 @@ public class FunctionHandler implements RequestHandler<Request, Response> {
 					jo.put("cpu0", round2(cpu0));
 					jo.put("cpu1", round2(cpu1));
 					jo.put("totalPCPU", round2(totalPCPU));
+					jo.put("overhead", javaOverhead);
 					jArray.put(jo);
 
 					// read any errors from the attempted command
@@ -168,6 +171,7 @@ public class FunctionHandler implements RequestHandler<Request, Response> {
 			}
 		}, STEP, STEP);
 	}
+
 	private double round2(double number) {
 		return (double) Math.round(number * 100) / 100;
 	}

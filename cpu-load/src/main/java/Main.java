@@ -4,102 +4,102 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 
 public class Main {
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 //        test(); // for windows, it doesn't have sha1sum so it will crash
-        run(args);
-    }
+		run(args);
+	}
 
-    private static void run(String[] args) {
-        Context c = getContext();
-        Request req = new Request();
+	private static void run(String[] args) {
+		Context c = getContext();
+		Request req = new Request();
 
-        req.setInputChilds(Integer.parseInt(args[0]));
-        
-        FunctionHandler funcHandler = new FunctionHandler();
-        Response response = funcHandler.handleRequest(req, c);
-        System.out.println(response.toString());
-    }
+		req.setInputChilds(Integer.parseInt(args[0]));
+
+		FunctionHandler funcHandler = new FunctionHandler();
+		Response response = funcHandler.handleRequest(req, c);
+		System.out.println(response.toString());
+	}
 
 	private static void test() {
-    	  Context c = getContext();
-          Request req = new Request();
+		Context c = getContext();
+		Request req = new Request();
 
-          req.setInputChilds(2);
-          
-          FunctionHandler funcHandler = new FunctionHandler();
-          Response response = funcHandler.handleRequest(req, c);
-          System.out.println(response.toString());
-    }
+		req.setInputChilds(2);
 
-    private static Context getContext() {
-        return new Context() {
-            @Override
-            public String getAwsRequestId() {
-                return "";
-            }
+		FunctionHandler funcHandler = new FunctionHandler();
+		Response response = funcHandler.handleRequest(req, c);
+		System.out.println(response.toString());
+	}
 
-            @Override
-            public String getLogGroupName() {
-                return "";
-            }
+	private static Context getContext() {
+		return new Context() {
+			@Override
+			public String getAwsRequestId() {
+				return "";
+			}
 
-            @Override
-            public String getLogStreamName() {
-                return "";
-            }
+			@Override
+			public String getLogGroupName() {
+				return "";
+			}
 
-            @Override
-            public String getFunctionName() {
-                return "";
-            }
+			@Override
+			public String getLogStreamName() {
+				return "";
+			}
 
-            @Override
-            public String getFunctionVersion() {
-                return "";
-            }
+			@Override
+			public String getFunctionName() {
+				return "";
+			}
 
-            @Override
-            public String getInvokedFunctionArn() {
-                return "";
-            }
+			@Override
+			public String getFunctionVersion() {
+				return "";
+			}
 
-            @Override
-            public CognitoIdentity getIdentity() {
-                return null;
-            }
+			@Override
+			public String getInvokedFunctionArn() {
+				return "";
+			}
 
-            @Override
-            public ClientContext getClientContext() {
-                return null;
-            }
+			@Override
+			public CognitoIdentity getIdentity() {
+				return null;
+			}
 
-            @Override
-            public int getRemainingTimeInMillis() {
-                return 0;
-            }
+			@Override
+			public ClientContext getClientContext() {
+				return null;
+			}
 
-            @Override
-            public int getMemoryLimitInMB() {
-                return 0;
-            }
+			@Override
+			public int getRemainingTimeInMillis() {
+				return 0;
+			}
 
-            @Override
-            public LambdaLogger getLogger() {
-                return new LambdaLogger() {
+			@Override
+			public int getMemoryLimitInMB() {
+				return 0;
+			}
 
-                    @Override
-                    public void log(byte[] arg0) {
-                        // TODO Auto-generated method stub
-                        
-                    }
+			@Override
+			public LambdaLogger getLogger() {
+				return new LambdaLogger() {
 
-                    @Override
-                    public void log(String arg0) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                };
-            }
-        };
-    }
+					@Override
+					public void log(byte[] arg0) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void log(String arg0) {
+						// TODO Auto-generated method stub
+
+					}
+				};
+			}
+		};
+	}
 }

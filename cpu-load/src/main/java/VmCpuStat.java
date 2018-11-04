@@ -22,8 +22,8 @@ class VmCpuStat {
 	VmCpuStat() {
 	}
 
-	VmCpuStat(long cpuusr, long cpunice, long cpukrn, long cpuidle,
-			long cpuiowait, long cpuirq, long cpusirq, long cpusteal) {
+	VmCpuStat(long cpuusr, long cpunice, long cpukrn, long cpuidle, long cpuiowait, long cpuirq, long cpusirq,
+			long cpusteal) {
 		this.cpuusr = cpuusr;
 		this.cpunice = cpunice;
 		this.cpukrn = cpukrn;
@@ -44,11 +44,9 @@ class VmCpuStat {
 			try (BufferedReader br = Files.newBufferedReader(p)) {
 				text = br.readLine();
 				String params[] = text.split(" ");
-				VmCpuStat vcs = new VmCpuStat(Long.parseLong(params[2]),
-						Long.parseLong(params[3]), Long.parseLong(params[4]),
-						Long.parseLong(params[5]), Long.parseLong(params[6]),
-						Long.parseLong(params[7]), Long.parseLong(params[8]),
-						Long.parseLong(params[9]));
+				VmCpuStat vcs = new VmCpuStat(Long.parseLong(params[2]), Long.parseLong(params[3]),
+						Long.parseLong(params[4]), Long.parseLong(params[5]), Long.parseLong(params[6]),
+						Long.parseLong(params[7]), Long.parseLong(params[8]), Long.parseLong(params[9]));
 				while ((text = br.readLine()) != null && text.length() != 0) {
 					// get boot time in ms since epoch
 					if (text.contains("btime")) {
@@ -82,9 +80,8 @@ class VmCpuStat {
 	}
 
 	public static VmCpuStat getVmCpuStatDiff(VmCpuStat v1, VmCpuStat v2) {
-		return new VmCpuStat(v2.cpuusr - v1.cpuusr, v2.cpunice - v1.cpunice,
-				v2.cpukrn - v1.cpukrn, v2.cpuidle - v1.cpuidle,
-				v2.cpuiowait - v1.cpuiowait, v2.cpuirq - v1.cpuirq,
-				v2.cpusirq - v1.cpusirq, v2.cpusteal - v1.cpusteal);
+		return new VmCpuStat(v2.cpuusr - v1.cpuusr, v2.cpunice - v1.cpunice, v2.cpukrn - v1.cpukrn,
+				v2.cpuidle - v1.cpuidle, v2.cpuiowait - v1.cpuiowait, v2.cpuirq - v1.cpuirq, v2.cpusirq - v1.cpusirq,
+				v2.cpusteal - v1.cpusteal);
 	}
 }
