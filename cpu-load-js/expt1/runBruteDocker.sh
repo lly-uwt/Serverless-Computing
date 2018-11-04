@@ -11,6 +11,8 @@ mem=128m
 loop=5
 wloop=2
 childs=(2 3 4)
+
+# childs=(2) # testing
 # cpuSetting=(1 2) # testing
 
 for child in ${childs[@]}; do
@@ -35,7 +37,6 @@ for child in ${childs[@]}; do
                 pcpu=`echo $elem | jq -r '.totalPCPU'`
                 overhead=`echo $elem | jq -r '.overhead'`
                 
-
                 echo $child,$cpu,$newContainer,$uuid,$index,$data,$cpu0,$cpu1,$pcpu,$overhead
                 echo $child,$cpu,$newContainer,$uuid,$index,$data,$cpu0,$cpu1,$pcpu,$overhead >> out-docker-child$child-loop$loop.csv
             done

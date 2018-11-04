@@ -1,0 +1,2 @@
+FROM openjdk:8
+COPY cpu-load-1.0.0.jar /
