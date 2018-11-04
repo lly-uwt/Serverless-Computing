@@ -12,10 +12,8 @@ sudo docker update --cpus="1" <name/id>
 sudo docker system prune # only dangling
 sudo docker system prune -a
 
-# sudo bash
-docker rm -f $(docker ps -a -q) # delete all containers
-docker rmi $(docker images -q) # delete all images
-
+sudo docker rm -f $(sudo docker ps -a -q) # delete all containers
+sudo docker rmi $(sudo docker images -q) # delete all images
 
 # Kill all running containers
 sudo docker ps -a | grep Up | cut -d ' ' -f 1| xargs sudo docker kill
