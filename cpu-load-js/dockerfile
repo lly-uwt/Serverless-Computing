@@ -1,2 +1,6 @@
-FROM node:8
+FROM amazonlinux:2017.03
+RUN yum install procps -y
+# RUN touch ~/.bashrc # not working for bash -c
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+RUN . ~/.nvm/nvm.sh ; nvm install 8.10.0
 COPY functionHandler.js /

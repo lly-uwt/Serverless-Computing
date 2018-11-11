@@ -1,8 +1,10 @@
 const { spawn } = require('child_process')
+const fs = require('fs')
 let processes
 let infos
 let timeup
 let newContainer = null
+let cpuName = null
 let uuid = null
 const path = '/tmp/container-id'
 const duration = 30000
@@ -12,8 +14,8 @@ exports.handler = (event, context, callback) => {
   processes = []
   infos = []
   timeup = false
-
   newContainerCheck()
+  getCpuName()
   spawnLoads(event.childNum)
   getInfo()
 
@@ -29,7 +31,7 @@ exports.run = (childNum = 2, outputFileFlag = false) => {
     console.log(JSON.stringify(result))
 
     if (outputFileFlag)
-      require('fs').writeFile('output.json', JSON.stringify(result), err => {
+      fs.writeFile('output.json', JSON.stringify(result), err => {
         if (err) console.error(err)
         console.log('output.json created')
       })
@@ -79,6 +81,7 @@ function getInfo() {
     procs.on('close', existCode => {
       infos.push({
         newContainer: newContainer,
+        cpuName: cpuName,
         uuid: uuid,
         index: count = count + 1,
         data: procsArr.join(';'),
@@ -92,7 +95,6 @@ function getInfo() {
 }
 
 function newContainerCheck() {
-  const fs = require('fs')
   fs.open(path, 'r+', (err, fd) => {
     if (err) { // not there
       const containerId = generateUUID()
@@ -108,6 +110,13 @@ function newContainerCheck() {
       })
     }
   })
+}
+
+function getCpuName() {
+  const content = fs.readFileSync('/proc/cpuinfo', 'utf8')
+  const start = content.indexOf('name') + 7
+  const end = start + content.substring(start).indexOf('\n')
+  cpuName = content.substring(start, end).trim()
 }
 
 // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
