@@ -1,0 +1,1 @@
+Simple js script for getting bash result

@@ -1,8 +1,7 @@
-
-[mmon](https://www.npmjs.com/package/mmon) may useful to test this
-
-
-run js `node -e 'require("./functionHandler").run()'`
+run js
+```js
+node -e 'require("./functionHandler").run()'
+```
 
 loads command
 ```sh
@@ -13,5 +12,5 @@ killall sha1sum
 Docker command for clean up:
 ```sh
 sudo docker system prune
-docker rm -f $(docker ps -a -q) # in sudo bash
+sudo docker rm -f $(sudo docker ps -a -q)
 ```
