@@ -1,10 +1,12 @@
 memorySetting=($(seq 128 64 3008))
+duration=30000
 loop=5
 wloop=2
 childs=(2 3 4)
 funcName=cpu-load
 
 # # testing
+# duration=3000
 # loop=1
 # wloop=0
 # childs=(2)
@@ -12,14 +14,15 @@ funcName=cpu-load
 # funcName=test3
 
 for child in ${childs[@]}; do
-    echo 'childs,memory,newContainer,cpuName,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-lambda-child$child-loop$loop.csv
+    TAIL='D'$duration'C'$child'W'$wloop'L'$loop'T'`date +%Y%m%d%H%M%S`
+    echo 'childs,memory,newContainer,cpuName,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-lambda-$TAIL.csv
     for memory in ${memorySetting[@]}; do
         aws lambda update-function-configuration --function-name $funcName --memory-size $memory
         for ((x=0; x<$wloop; x++)); do
-            aws lambda invoke --function-name $funcName --payload '{"childNum":'$child'}' /dev/stdout
+            aws lambda invoke --function-name $funcName --payload '{"childNum":'$child',"duration":'$duration'}' /dev/stdout
         done
         for ((i=0; i<$loop; i++)); do
-            output=`aws lambda invoke --function-name $funcName --payload '{"childNum":'$child'}' /dev/stdout | head -n 1 | head -c -2 ; echo`
+            output=`aws lambda invoke --function-name $funcName --payload '{"childNum":'$child', "duration":'$duration'}' /dev/stdout | head -n 1 | head -c -2 ; echo`
             mapfile -t array < <(jq -c '.[]' <<< $output)
             IFS=$'\n'
             for elem in ${array[@]}; do
@@ -34,7 +37,7 @@ for child in ${childs[@]}; do
                 overhead=`echo $elem | jq -r '.overhead'`
 
                 echo $child,$memory,$newContainer,$cpuName,$uuid,$index,$data,$cpu0,$cpu1,$pcpu,$overhead
-                echo $child,$memory,$newContainer,$cpuName,$uuid,$index,$data,$cpu0,$cpu1,$pcpu,$overhead >> out-lambda-child$child-loop$loop.csv
+                echo $child,$memory,$newContainer,$cpuName,$uuid,$index,$data,$cpu0,$cpu1,$pcpu,$overhead >> out-lambda-$TAIL.csv
             done
         done
     done

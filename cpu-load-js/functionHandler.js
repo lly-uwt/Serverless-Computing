@@ -7,7 +7,6 @@ let newContainer = null
 let cpuName = null
 let uuid = null
 const path = '/tmp/container-id'
-const duration = 30000
 const step = 1000
 
 exports.handler = (event, context, callback) => {
@@ -20,13 +19,13 @@ exports.handler = (event, context, callback) => {
   getInfo()
 
   setTimeout(() => {
-    callback(null, infos)
+    callback(null, infos) //(error, success)
     timeup = true
-  }, duration) //(error, success)
+  }, event.duration)
 }
 
-exports.run = (childNum = 2, outputFileFlag = false) => {
-  this.handler({ childNum: childNum }, null, (error, result) => {
+exports.run = (childNum = 2, duration = 30000, outputFileFlag = false) => {
+  this.handler({ childNum: childNum, duration: duration }, null, (error, result) => {
     if (error) console.error(error)
     console.log(JSON.stringify(result))
 

@@ -1,8 +1,8 @@
 run js
 ```sh
-node -e 'require("./functionHandler").run(2, true)'
+node -e 'require("./functionHandler").run(2, 3000, true)'
 # or
-source ~/.nvm/nvm.sh ; node -e 'require("./functionHandler").run(2, true)'
+source ~/.nvm/nvm.sh ; node -e 'require("./functionHandler").run(2, 3000, true)'
 ```
 
 loads command
