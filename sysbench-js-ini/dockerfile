@@ -1,13 +1,10 @@
-FROM fedora
+FROM amazonlinux:2017.03
+RUN curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | bash
 RUN yum install sysbench -y
 # RUN yum update -y
 RUN mkdir sysb
-RUN cp /lib64/libmariadb.so.3 /sysb/
-RUN cp /lib64/libpq.so.5 /sysb/
-RUN cp /lib64/libluajit-5.1.so.2 /sysb/
-RUN cp /lib64/libck.so.0 /sysb/
+RUN cp /usr/lib64/mysql/libmysqlclient_r.so.16 /sysb/
+RUN cp /usr/lib64/libpq.so.5 /sysb/
 RUN cp /lib64/libaio.so.1 /sysb/
-RUN cp /lib64/libssl.so.1.1 /sysb/
-RUN cp /lib64/libcrypto.so.1.1 /sysb/
-RUN cp /bin/sysbench /sysb/
+RUN cp /usr/bin/sysbench /sysb/
 CMD ["/bin/bash"]
