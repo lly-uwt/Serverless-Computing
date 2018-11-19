@@ -36,23 +36,26 @@ Threads fairness:
 Example JSON version:
 ```json
 {
-    "primeLimit": 200,
-    "threads": 2,
-    "speed": 453916.86,
-    "general": {
-        "totalTime": 10.0001,
-        "totalEvent": 4539933
-    },
-    "latency":{
-        "min": 0.00,
-        "avg": 0.00,
-        "max": 24.02,
-        "95th": 0.00,
-        "sum": 19033.98
-    },
-    "fairness": {
-        "events": "2269966.5000/11439.50",
-        "execTime": "9.5170/0.01"
-    }
+  "newContainer": 1,
+  "cpuName": "Intel(R) Xeon(R) CPU E5-2680 v2 @ 2.80GHz",
+  "uuid": "6beb0f53-8056-4b6c-adc0-e96f17aae99f",
+  "threads": 2,
+  "primeLimit": 200,
+  "speed": 15424.73,
+  "general": {
+    "totalTime": 10.06,
+    "totalEvent": 155198
+  },
+  "latency": {
+    "min": 0,
+    "avg": 0.13,
+    "max": 416.12,
+    "95th": 0.01,
+    "sum": 19886.44
+  },
+  "fairness": {
+    "events": "77599.0000/13715.00",
+    "execTime": "9.9432/0.05"
+  }
 }
 ```
