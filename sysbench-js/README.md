@@ -1,5 +1,7 @@
-run js `node -e 'require("./functionHandler").run()'`
-
+run js
+```sh
+source ~/.nvm/nvm.sh ; node -e 'require("./functionHandler").run(200, true)'
+```
 #### `sysbench cpu --cpu-max-prime=200 --threads=2`
 Example console output version:
 ```

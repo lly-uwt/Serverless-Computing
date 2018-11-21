@@ -12,7 +12,7 @@ exports.handler = (event, context, callback) => {
   exec('cp -a sysb/. /tmp/', () => {
     exec('chmod +x /tmp/sysbench', () => {
       const procs = exec(
-        'LD_LIBRARY_PATH=/tmp  /tmp/sysbench cpu --cpu-max-prime=200 --threads=2 run',
+        `LD_LIBRARY_PATH=/tmp  /tmp/sysbench cpu --cpu-max-prime=${event.primeNumLimit} --threads=2 run`,
         (error, stdout, stderr) => {
           procsArr.error = error
           procsArr.stdout = stdout
@@ -70,8 +70,8 @@ function getStatsPrimeTest(output) {
   }
 }
 
-exports.run = wantOutputFile => {
-  this.handler(null, null, (error, result) => {
+exports.run = (primeNumLimit = 200, wantOutputFile) => {
+  this.handler({ primeNumLimit: primeNumLimit }, null, (error, result) => {
     if (error) console.error(error)
     console.log(JSON.stringify(result))
 
