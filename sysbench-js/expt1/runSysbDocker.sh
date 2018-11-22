@@ -13,10 +13,10 @@ loop=5
 wloop=2
 
 # testing
-cpuSetting=(1 2)
-primeNumLimit=200
-loop=1
-wloop=0
+# cpuSetting=(1 2)
+# primeNumLimit=200
+# loop=1
+# wloop=0
 
 stamp='P'$primeNumLimit'W'$wloop'L'$loop'T'`date +%Y%m%d%H%M%S`
 echo 'stamp,#cpu,newContainer,cpuName,uuid,threads,primeLimit,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-docker.csv
