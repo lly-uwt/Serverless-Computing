@@ -12,8 +12,8 @@ consecutiveCount=0
 
 memorySetting=($(seq 128 64 3008))
 primeNumLimit=100000
-# remember add wloop
-loop=3
+# loop = loop + wloop
+loop=103
 funcName=sysbench
 
 # testing
@@ -37,7 +37,7 @@ changeSubnet(){
     echo $currentSubnet
 }
 
-stamp='P'$primeNumLimit'W'$wloop'L'$loop'T'`date +%Y%m%d%H%M%S`
+stamp='P'$primeNumLimit'L'$loop'T'`date +%Y%m%d%H%M%S`'S'
 echo 'stamp,memory,newContainer,cpuName,uuid,threads,primeLimit,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-lambda.csv
 for memory in ${memorySetting[@]}; do
     aws lambda update-function-configuration --function-name $funcName --memory-size $memory

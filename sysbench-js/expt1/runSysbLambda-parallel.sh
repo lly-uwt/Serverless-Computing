@@ -1,15 +1,21 @@
 memorySetting=($(seq 128 64 3008))
 primeNumLimit=100000
-loop=5
-wloop=2
+loop=100
+wloop100=2
 funcName=sysbench
 
 # testing
 # memorySetting=(128 256)
 # primeNumLimit=200
 # loop=1
-# wloop=0
+# wloop100=0
 # funcName=sysbench
+
+warmup(){
+    for ((x=0; x<100; x++)); do
+        aws lambda invoke --function-name $funcName --payload '{"primeNumLimit":'$primeNumLimit'}' /dev/stdout &
+    done
+}
 
 task(){
     output=`aws lambda invoke --function-name $funcName --payload '{"primeNumLimit":'$primeNumLimit'}' /dev/stdout | head -n 1 | head -c -2 ; echo`
@@ -34,12 +40,12 @@ task(){
     echo $stamp,$1,$newContainer,$cpuName,$uuid,$threads,$primeLimit,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime >> sysbench-lambda.csv
 }
 
-stamp='P'$primeNumLimit'W'$wloop'L'$loop'T'`date +%Y%m%d%H%M%S`
+stamp='P'$primeNumLimit'W'$wloop100'L'$loop'T'`date +%Y%m%d%H%M%S`'P'
 echo 'stamp,memory,newContainer,cpuName,uuid,threads,primeLimit,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-lambda.csv
 for memory in ${memorySetting[@]}; do
     aws lambda update-function-configuration --function-name $funcName --memory-size $memory
-    for ((x=0; x<$wloop; x++)); do
-        aws lambda invoke --function-name $funcName --payload '{"primeNumLimit":'$primeNumLimit'}' /dev/stdout &
+    for ((x=0; x<$wloop100; x++)); do
+        warmup
     done
     for ((i=0; i<$loop; i++)); do
        task $memory &
