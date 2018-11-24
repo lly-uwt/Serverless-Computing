@@ -1,7 +1,7 @@
 const { spawn } = require('child_process')
 const fs = require('fs')
 let processes
-let infos
+let datapoints
 let timeup
 let newContainer = null
 let cpuName = null
@@ -11,7 +11,7 @@ const step = 1000
 
 exports.handler = (event, context, callback) => {
   processes = []
-  infos = []
+  datapoints = []
   timeup = false
   newContainerCheck()
   getCpuName()
@@ -19,7 +19,13 @@ exports.handler = (event, context, callback) => {
   getInfo()
 
   setTimeout(() => {
-    callback(null, infos) //(error, success)
+    response = {
+      newContainer: newContainer,
+      cpuName: cpuName,
+      uuid: uuid,
+      datapoints: datapoints
+    }
+    callback(null, response) //(error, success)
     timeup = true
   }, event.duration)
 }
@@ -78,12 +84,9 @@ function getInfo() {
     })
 
     procs.on('close', existCode => {
-      infos.push({
-        newContainer: newContainer,
-        cpuName: cpuName,
-        uuid: uuid,
+      datapoints.push({
         index: count = count + 1,
-        data: procsArr.join(';'),
+        ps: procsArr.join(';'),
         cpu0: parseFloat(cpu0.toFixed(2)),
         cpu1: parseFloat(cpu1.toFixed(2)),
         totalPCPU: parseFloat(totalPCPU.toFixed(2)),

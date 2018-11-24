@@ -14,8 +14,9 @@ funcName=cpu-load
 # funcName=test3
 
 for child in ${childs[@]}; do
-    TAIL='D'$duration'C'$child'W'$wloop'L'$loop'T'`date +%Y%m%d%H%M%S`
-    echo 'childs,memory,newContainer,cpuName,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-lambda-$TAIL.csv
+    stamp='D'$duration'C'$child'W'$wloop'L'$loop'T'`date +%Y%m%d%H%M%S`
+    echo 'childs,memory,newContainer,cpuName,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-lambda.csv
+    
     for memory in ${memorySetting[@]}; do
         aws lambda update-function-configuration --function-name $funcName --memory-size $memory
         for ((x=0; x<$wloop; x++)); do
@@ -23,12 +24,15 @@ for child in ${childs[@]}; do
         done
         for ((i=0; i<$loop; i++)); do
             output=`aws lambda invoke --function-name $funcName --payload '{"childNum":'$child', "duration":'$duration'}' /dev/stdout | head -n 1 | head -c -2 ; echo`
-            mapfile -t array < <(jq -c '.[]' <<< $output)
+            
+            newContainer=`echo $output | jq -r '.newContainer'`
+            cpuName=`echo $output | jq -r '.cpuName'`
+            uuid=`echo $output | jq -r '.uuid'`
+            datapoints=`echo $output | jq -r '.datapoints'`
+
+            mapfile -t array < <(jq -c '.[]' <<< $datapoints)
             IFS=$'\n'
             for elem in ${array[@]}; do
-                newContainer=`echo $elem | jq -r '.newContainer'`
-                cpuName=`echo $elem | jq -r '.cpuName'`
-                uuid=`echo $elem | jq -r '.uuid'`
                 index=`echo $elem | jq -r '.index'`
                 data=`echo $elem | jq -r '.data'`
                 cpu0=`echo $elem| jq -r '.cpu0'`
@@ -36,8 +40,9 @@ for child in ${childs[@]}; do
                 pcpu=`echo $elem | jq -r '.totalPCPU'`
                 overhead=`echo $elem | jq -r '.overhead'`
 
-                echo $child,$memory,$newContainer,$cpuName,$uuid,$index,$data,$cpu0,$cpu1,$pcpu,$overhead
-                echo $child,$memory,$newContainer,$cpuName,$uuid,$index,$data,$cpu0,$cpu1,$pcpu,$overhead >> out-lambda-$TAIL.csv
+                echo $i
+                echo $stamp,$child,$memory,$newContainer,$cpuName,$uuid,$index,$ps,$cpu0,$cpu1,$pcpu,$overhead
+                echo $stamp,$child,$memory,$newContainer,$cpuName,$uuid,$index,$ps,$cpu0,$cpu1,$pcpu,$overhead >> out-lambda.csv
             done
         done
     done
