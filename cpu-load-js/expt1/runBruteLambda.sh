@@ -15,7 +15,7 @@ funcName=cpu-load
 
 for child in ${childs[@]}; do
     stamp='D'$duration'C'$child'W'$wloop'L'$loop'T'`date +%Y%m%d%H%M%S`
-    echo 'childs,memory,newContainer,cpuName,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-lambda.csv
+    echo 'childs,memory,newContainer,cpuName,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-lambda-child$child.csv
     
     for memory in ${memorySetting[@]}; do
         aws lambda update-function-configuration --function-name $funcName --memory-size $memory
@@ -42,7 +42,7 @@ for child in ${childs[@]}; do
 
                 echo $i
                 echo $stamp,$child,$memory,$newContainer,$cpuName,$uuid,$index,$ps,$cpu0,$cpu1,$pcpu,$overhead
-                echo $stamp,$child,$memory,$newContainer,$cpuName,$uuid,$index,$ps,$cpu0,$cpu1,$pcpu,$overhead >> out-lambda.csv
+                echo $stamp,$child,$memory,$newContainer,$cpuName,$uuid,$index,$ps,$cpu0,$cpu1,$pcpu,$overhead >> out-lambda-child$child.csv
             done
         done
     done

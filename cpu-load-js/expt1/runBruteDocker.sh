@@ -17,12 +17,12 @@ childs=(2 3 4)
 # duration=3000
 # loop=1
 # wloop=0
-# childs=(2) 
+# childs=(2 3) 
 # cpuSetting=(1 2)
 
 for child in ${childs[@]}; do
     stamp='D'$duration'C'$child'W'$wloop'L'$loop'T'`date +%Y%m%d%H%M%S`
-    echo 'stamp,childs,#cpu,newContainer,cpuName,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-docker.csv
+    echo 'stamp,childs,#cpu,newContainer,cpuName,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-docker-child$child.csv
 
     for cpu in ${cpuSetting[@]}; do
         sudo docker update --cpus=$cpu --memory=$mem brute-container
@@ -49,7 +49,7 @@ for child in ${childs[@]}; do
                 
                 echo $i
                 echo $stamp,$child,$cpu,$newContainer,$cpuName,$uuid,$index,$ps,$cpu0,$cpu1,$pcpu,$overhead
-                echo $stamp,$child,$cpu,$newContainer,$cpuName,$uuid,$index,$ps,$cpu0,$cpu1,$pcpu,$overhead >> out-docker.csv
+                echo $stamp,$child,$cpu,$newContainer,$cpuName,$uuid,$index,$ps,$cpu0,$cpu1,$pcpu,$overhead >> out-docker-child$child.csv
             done
         done
     done
