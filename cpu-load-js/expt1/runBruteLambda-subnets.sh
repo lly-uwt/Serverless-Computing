@@ -46,9 +46,6 @@ for child in ${childs[@]}; do
     
     for memory in ${memorySetting[@]}; do
         aws lambda update-function-configuration --function-name $funcName --memory-size $memory
-        for ((x=0; x<$wloop; x++)); do
-            aws lambda invoke --function-name $funcName --payload '{"childNum":'$child',"duration":'$duration'}' /dev/stdout
-        done
         for ((i=0; i<$loop; i++)); do
             output=`aws lambda invoke --function-name $funcName --payload '{"childNum":'$child', "duration":'$duration'}' /dev/stdout | head -n 1 | head -c -2 ; echo`
             

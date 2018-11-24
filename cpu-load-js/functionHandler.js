@@ -19,7 +19,7 @@ exports.handler = (event, context, callback) => {
   getInfo()
 
   setTimeout(() => {
-    response = {
+    let response = {
       newContainer: newContainer,
       cpuName: cpuName,
       uuid: uuid,
