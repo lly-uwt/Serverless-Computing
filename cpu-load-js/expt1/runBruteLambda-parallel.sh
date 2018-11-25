@@ -1,7 +1,7 @@
 memorySetting=($(seq 128 64 3008))
 duration=30000
 loop=100
-wloop100=2
+wloop100=5
 childs=(2 3 4)
 funcName=cpu-load
 
@@ -31,7 +31,7 @@ task(){
     IFS=$'\n'
     for elem in ${array[@]}; do
         index=`echo $elem | jq -r '.index'`
-        data=`echo $elem | jq -r '.data'`
+        ps=`echo $elem | jq -r '.ps'`
         cpu0=`echo $elem| jq -r '.cpu0'`
         cpu1=`echo $elem| jq -r '.cpu1'`
         pcpu=`echo $elem | jq -r '.totalPCPU'`
@@ -44,7 +44,7 @@ task(){
 
 for child in ${childs[@]}; do
     stamp='D'$duration'C'$child'W'$wloop100'L'$loop'T'`date +%Y%m%d%H%M%S`
-    echo 'childs,memory,newContainer,cpuName,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-lambda-child$child.csv
+    echo 'stamp,childs,memory,newContainer,cpuName,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-lambda-child$child.csv
     
     for memory in ${memorySetting[@]}; do
         aws lambda update-function-configuration --function-name $funcName --memory-size $memory
