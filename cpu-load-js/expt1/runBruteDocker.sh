@@ -25,7 +25,7 @@ for child in ${childs[@]}; do
     echo 'stamp,childs,#cpu,newContainer,cpuName,uuid,indexBatch,processes,cpu0,cpu1,totalpcpu,overhead' > out-docker-child$child.csv
 
     for cpu in ${cpuSetting[@]}; do
-        sudo docker update --cpus=$cpu --memory=$mem brute-container
+        sudo docker update --cpus=$cpu --memory=$mem --memory-swap=$mem brute-container
         for ((x=0; x<$wloop; x++)); do
             sudo docker exec -it brute-container bash -c 'source ~/.nvm/nvm.sh ; node -e "require(\"./functionHandler\").run('$child','$duration')"'
         done

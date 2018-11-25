@@ -21,7 +21,7 @@ wloop=2
 stamp='P'$primeNumLimit'W'$wloop'L'$loop'T'`date +%Y%m%d%H%M%S`
 echo 'stamp,#cpu,newContainer,cpuName,uuid,threads,primeLimit,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-docker.csv
 for cpu in ${cpuSetting[@]}; do
-    sudo docker update --cpus=$cpu --memory=$mem sysbench-container
+    sudo docker update --cpus=$cpu --memory=$mem --memory-swap=$mem sysbench-container
     for ((x=0; x<$wloop; x++)); do
         sudo docker exec -it sysbench-container bash -c 'source ~/.nvm/nvm.sh ; node -e "require(\"./functionHandler\").run('$primeNumLimit')"'
     done
