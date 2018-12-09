@@ -1,3 +1,4 @@
 {
-    "primeNumLimit": 200
+    "maxPrime": 200,
+    "events": 1
 }

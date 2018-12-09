@@ -11,14 +11,16 @@ consecutiveLimit=20
 consecutiveCount=0
 
 memorySetting=($(seq 128 64 3008))
-primeNumLimit=100000
+maxPrime=5000
+events=5000
 # loop = loop + wloop
 loop=103
 funcName=sysbench
 
 # testing
 # memorySetting=(128 256)
-# primeNumLimit=200
+# maxPrime=200
+# events=1
 # loop=1
 # funcName=sysbench
 
@@ -37,18 +39,18 @@ changeSubnet(){
     echo $currentSubnet
 }
 
-stamp='P'$primeNumLimit'L'$loop'T'`date +%Y%m%d%H%M%S`'S'
-echo 'stamp,memory,newContainer,cpuName,uuid,threads,primeLimit,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-lambda.csv
+stamp='P'$maxPrime'E'$events'L'$loop'T'`date +%Y%m%d%H%M%S`'S'
+echo 'stamp,memory,newContainer,cpuName,uuid,threads,maxPrime,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-lambda.csv
 for memory in ${memorySetting[@]}; do
     aws lambda update-function-configuration --function-name $funcName --memory-size $memory
     for ((i=0; i<$loop; i++)); do
-        output=`aws lambda invoke --function-name $funcName --payload '{"primeNumLimit":'$primeNumLimit'}' /dev/stdout | head -n 1 | head -c -2 ; echo`
+        output=`aws lambda invoke --function-name $funcName --payload '{"maxPrime":'$maxPrime', "events":'$events'}' /dev/stdout | head -n 1 | head -c -2 ; echo`
 
         newContainer=`echo $output | jq -r '.newContainer'`
         cpuName=`echo $output | jq -r '.cpuName'`
         uuid=`echo $output | jq -r '.uuid'`
         threads=`echo $output | jq -r '.threads'`
-        primeLimit=`echo $output | jq -r '.primeLimit'`
+        maxPrime=`echo $output | jq -r '.maxPrime'`
         speed=`echo $output| jq -r '.speed'`
         tt=`echo $output| jq -r '.general.totalTime'`
         te=`echo $output | jq -r '.general.totalEvent'`
@@ -62,8 +64,8 @@ for memory in ${memorySetting[@]}; do
 
         if [ "$cpuName" = "$cpuTarget" ]; then
             consecutiveCount=0
-            echo $stamp,$memory,$newContainer,$cpuName,$uuid,$threads,$primeLimit,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime
-            echo $stamp,$memory,$newContainer,$cpuName,$uuid,$threads,$primeLimit,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime >> sysbench-lambda.csv
+            echo $stamp,$memory,$newContainer,$cpuName,$uuid,$threads,$maxPrime,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime
+            echo $stamp,$memory,$newContainer,$cpuName,$uuid,$threads,$maxPrime,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime >> sysbench-lambda.csv
         else
             echo $cpuName != $cpuTarget
             changeSubnet
