@@ -6,7 +6,7 @@ sudo docker rmi sysbench
 sudo docker build --no-cache -t sysbench .
 sudo docker run -it -d --rm --name=sysbench-container sysbench
 
-cpuSetting=($(seq .1 .01 2))
+cpuSetting=($(seq .01 .01 2))
 maxPrime=5000
 events=1
 mem=128m
