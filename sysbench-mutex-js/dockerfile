@@ -1,0 +1,13 @@
+FROM amazonlinux:2017.03
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+RUN . ~/.nvm/nvm.sh ; nvm install 8.10.0
+RUN curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.rpm.sh | bash
+RUN yum install sysbench -y
+# RUN yum update -y
+RUN mkdir sysb
+RUN cp /usr/lib64/mysql/libmysqlclient_r.so.16 /sysb/
+RUN cp /usr/lib64/libpq.so.5 /sysb/
+RUN cp /lib64/libaio.so.1 /sysb/
+RUN cp /usr/bin/sysbench /sysb/
+COPY functionHandler.js /
+CMD ["/bin/bash"]
