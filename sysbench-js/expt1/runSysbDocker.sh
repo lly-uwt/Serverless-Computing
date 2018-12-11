@@ -21,7 +21,7 @@ wloop=2
 # wloop=0
 
 stamp='P'$maxPrime'E'$events'W'$wloop'L'$loop'T'`date +%Y%m%d%H%M%S`
-echo 'stamp,#cpu,newContainer,cpuName,uuid,threads,maxPrime,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-docker.csv
+echo 'stamp,#cpu,newContainer,cpuName,uuid,threads,primeLimit,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-docker.csv
 for cpu in ${cpuSetting[@]}; do
     sudo docker update --cpus=$cpu --memory=$mem --memory-swap=$mem sysbench-container
     for ((x=0; x<$wloop; x++)); do
@@ -34,7 +34,7 @@ for cpu in ${cpuSetting[@]}; do
         cpuName=`echo $output | jq -r '.cpuName'`
         uuid=`echo $output | jq -r '.uuid'`
         threads=`echo $output | jq -r '.threads'`
-        maxPrime=`echo $output | jq -r '.maxPrime'`
+        primeLimit=`echo $output | jq -r '.primeLimit'`
         speed=`echo $output| jq -r '.speed'`
         tt=`echo $output| jq -r '.general.totalTime'`
         te=`echo $output | jq -r '.general.totalEvent'`
@@ -46,7 +46,7 @@ for cpu in ${cpuSetting[@]}; do
         fevent=`echo $output | jq -r '.fairness.events'`
         fexecTime=`echo $output | jq -r '.fairness.execTime'`
         
-        echo $stamp,$cpu,$newContainer,$cpuName,$uuid,$threads,$maxPrime,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime
-        echo $stamp,$cpu,$newContainer,$cpuName,$uuid,$threads,$maxPrime,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime >> sysbench-docker.csv
+        echo $stamp,$cpu,$newContainer,$cpuName,$uuid,$threads,$primeLimit,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime
+        echo $stamp,$cpu,$newContainer,$cpuName,$uuid,$threads,$primeLimit,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime >> sysbench-docker.csv
     done
 done

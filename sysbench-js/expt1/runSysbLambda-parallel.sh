@@ -26,7 +26,7 @@ task(){
     cpuName=`echo $output | jq -r '.cpuName'`
     uuid=`echo $output | jq -r '.uuid'`
     threads=`echo $output | jq -r '.threads'`
-    maxPrime=`echo $output | jq -r '.maxPrime'`
+    primeLimit=`echo $output | jq -r '.primeLimit'`
     speed=`echo $output| jq -r '.speed'`
     tt=`echo $output| jq -r '.general.totalTime'`
     te=`echo $output | jq -r '.general.totalEvent'`
@@ -38,12 +38,12 @@ task(){
     fevent=`echo $output | jq -r '.fairness.events'`
     fexecTime=`echo $output | jq -r '.fairness.execTime'`
 
-    echo $stamp,$1,$newContainer,$cpuName,$uuid,$threads,$maxPrime,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime
-    echo $stamp,$1,$newContainer,$cpuName,$uuid,$threads,$maxPrime,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime >> sysbench-lambda.csv
+    echo $stamp,$1,$newContainer,$cpuName,$uuid,$threads,$primeLimit,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime
+    echo $stamp,$1,$newContainer,$cpuName,$uuid,$threads,$primeLimit,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime >> sysbench-lambda.csv
 }
 
 stamp='P'$maxPrime'E'$events'W'$wloop100'L'$loop'T'`date +%Y%m%d%H%M%S`'P'
-echo 'stamp,memory,newContainer,cpuName,uuid,threads,maxPrime,events,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-lambda.csv
+echo 'stamp,memory,newContainer,cpuName,uuid,threads,primetLimit,events,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-lambda.csv
 for memory in ${memorySetting[@]}; do
     aws lambda update-function-configuration --function-name $funcName --memory-size $memory
     for ((x=0; x<$wloop100; x++)); do

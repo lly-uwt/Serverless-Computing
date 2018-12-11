@@ -40,7 +40,7 @@ changeSubnet(){
 }
 
 stamp='P'$maxPrime'E'$events'L'$loop'T'`date +%Y%m%d%H%M%S`'S'
-echo 'stamp,memory,newContainer,cpuName,uuid,threads,maxPrime,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-lambda.csv
+echo 'stamp,memory,newContainer,cpuName,uuid,threads,primeLimit,speed,totalTime,totalEvent,lateMin,lateAvg,lateMax,late95th,lateSum,fevent,fexecTime' > sysbench-lambda.csv
 for memory in ${memorySetting[@]}; do
     aws lambda update-function-configuration --function-name $funcName --memory-size $memory
     for ((i=0; i<$loop; i++)); do
@@ -50,7 +50,7 @@ for memory in ${memorySetting[@]}; do
         cpuName=`echo $output | jq -r '.cpuName'`
         uuid=`echo $output | jq -r '.uuid'`
         threads=`echo $output | jq -r '.threads'`
-        maxPrime=`echo $output | jq -r '.maxPrime'`
+        primeLimit=`echo $output | jq -r '.primeLimit'`
         speed=`echo $output| jq -r '.speed'`
         tt=`echo $output| jq -r '.general.totalTime'`
         te=`echo $output | jq -r '.general.totalEvent'`
@@ -64,8 +64,8 @@ for memory in ${memorySetting[@]}; do
 
         if [ "$cpuName" = "$cpuTarget" ]; then
             consecutiveCount=0
-            echo $stamp,$memory,$newContainer,$cpuName,$uuid,$threads,$maxPrime,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime
-            echo $stamp,$memory,$newContainer,$cpuName,$uuid,$threads,$maxPrime,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime >> sysbench-lambda.csv
+            echo $stamp,$memory,$newContainer,$cpuName,$uuid,$threads,$primeLimit,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime
+            echo $stamp,$memory,$newContainer,$cpuName,$uuid,$threads,$primeLimit,$speed,$tt,$te,$lateMin,$lateAvg,$lateMax,$late95th,$lateSum,$fevent,$fexecTime >> sysbench-lambda.csv
         else
             echo $cpuName != $cpuTarget
             changeSubnet

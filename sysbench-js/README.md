@@ -1,7 +1,9 @@
 run js
 ```sh
-source ~/.nvm/nvm.sh ; node -e 'require("./functionHandler").run(200, true)'
+source ~/.nvm/nvm.sh ; node -e 'require("./functionHandler").run(200,200, true)'
 ```
+maxPrime == primeLimit just in different context (input vs output)
+
 #### `sysbench cpu --cpu-max-prime=200 --threads=2`
 Example console output version:
 ```
